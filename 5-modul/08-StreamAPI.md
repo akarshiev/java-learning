@@ -1,986 +1,736 @@
-# 11 - Stream API (Oqimlar API)
+# Stream API - To'liq Qo'llanma
 
-## Stream nima?
+## Stream API nima?
 
-**Stream** - Java 8 ning eng muhim xususiyatlaridan biri bo'lib, ma'lumotlar bilan deklarativ usulda ishlash imkonini beradi. Stream - bu ma'lumotlar manbasidan (collection, array, generator) keladigan elementlar ketma-ketligi.
+**Stream API** - Java 8 da qo'shilgan, ma'lumotlar to'plamlari (collections) ustida murakkab operatsiyalarni sodda va tushunarli qilib bajarish imkonini beradigan vosita.
+
+Tasavvur qiling, sizda bir quti rangli qalamlar bor. Siz:
+- Faqat qizil qalamlarni ajratmoqchisiz
+- Ularni uzunligi bo'yicha saralamoqchisiz
+- Eng uzun 5 tasini olmoqchisiz
+
+Oddiy usulda: qutini ochasiz, har bir qalamni tekshirasiz, qizillarni alohida qutiga solasiz, keyin ularni o'lchaysiz, saralaysiz...
+
+Stream API bilan: "Menga qizil qalamlarni ol, ularni uzunligi bo'yicha sarala va eng uzun 5 tasini qaytar" deysiz. Qanday qilib bajarilishi bilan shug'ullanmaysiz.
+
+---
+
+## Nima uchun Stream API kerak?
+
+### 1. Kodni soddalashtirish
 
 ```java
-// Imperative vs Declarative
-
-// ❌ Imperative (qanday qilishni aytamiz)
+// ❌ Streamsiz - nima bo'layotganini tushunish uchun kodni o'qish kerak
 List<String> result = new ArrayList<>();
 for (String name : names) {
-    if (name.startsWith("A")) {
+    if (name != null && name.startsWith("A")) {
         result.add(name.toUpperCase());
     }
 }
+Collections.sort(result);
 
-// ✅ Declarative (nimani xohlaymizni aytamiz)
+// ✅ Stream bilan - bir qarashda tushunasiz
 List<String> result = names.stream()
-    .filter(name -> name.startsWith("A"))
+    .filter(name -> name != null && name.startsWith("A"))
     .map(String::toUpperCase)
+    .sorted()
     .toList();
 ```
 
-### Stream'ning asosiy xususiyatlari
+### 2. Xatolarni kamaytirish
 
-1. **No storage** - Ma'lumotlarni saqlamaydi, faqat hisoblashlarni bajaradi
-2. **Functional in nature** - Stream operatsiyalari manbani o'zgartirmaydi
-3. **Lazy execution** - Terminal operatsiya chaqirilguncha bajarilmaydi
-4. **Possibly unbounded** - Cheksiz bo'lishi mumkin
-5. **Consumable** - Bir marta ishlatiladi, qayta ishlatib bo'lmaydi
+Stream'lar bilan ishlaganda:
+- Index xatolari bo'lmaydi
+- Off-by-one xatolari bo'lmaydi
+- Concurrent modification xatolari bo'lmaydi
+
+### 3. Parallel ishlash oson
+
+```java
+// Parallel ishlash - bir qator kod bilan
+int sum = numbers.parallelStream()
+    .filter(n -> n > 0)
+    .mapToInt(n -> n)
+    .sum();
+```
+
+### 4. Deklarativ yondashuv
+
+**Imperativ (qanday qilishni aytamiz):**
+"Men massivni aylanaman, har bir elementni tekshiraman, agar shart bajarilsa, uni ro'yxatga qo'shaman..."
+
+**Deklarativ (nimani xohlaymizni aytamiz):**
+"Menga shartga mos keladigan elementlarni ber"
 
 ---
 
-## 11.1 - Stream va Collection
+## Stream qanday ishlaydi?
 
-### Stream vs Collection
+Stream'ni suv quvuriga o'xshatish mumkin:
 
-| Xususiyat | Collection | Stream |
-|-----------|------------|--------|
-| **Ma'lumot saqlash** | Ha (fizik ma'lumotlar) | Yo'q (mantiqiy view) |
-| **O'zgartirish** | O'zgartirish mumkin | O'zgartirmaydi |
-| **Ishlash vaqti** | Eager (darhol) | Lazy (kechikkan) |
-| **Cheksizlik** | Cheklangan | Cheksiz bo'lishi mumkin |
-| **Qayta ishlatish** | Ko'p marta | Bir marta |
+```
+Manba (Collection) 
+    → [Filter] (faqat qizil to'plarni o'tkaz)
+    → [Map] (har bir to'pni qayta ishlab, yangi narsa chiqar)
+    → [Collect] (natijalarni yig'ib, yangi kolleksiya yarat)
+```
+
+Har bir bosqich:
+1. **Source** - Ma'lumotlar qayerdan keladi? (List, Set, array, file)
+2. **Intermediate operations** - Ma'lumotlar bilan nima qilamiz? (filtrlash, o'zgartirish)
+3. **Terminal operation** - Natijani qanday olamiz? (yig'ish, hisoblash)
+
+---
+
+## Stream tushunchalari
+
+### 1. Stream - bu ma'lumotlar oqimi
 
 ```java
-public class StreamVsCollection {
-    public static void main(String[] args) {
-        List<String> collection = Arrays.asList("a", "b", "c");
-        
-        // Collection - ko'p marta ishlatish mumkin
-        collection.forEach(System.out::println);
-        collection.forEach(System.out::println);  // OK
-        
-        // Stream - bir marta ishlatiladi
-        Stream<String> stream = collection.stream();
-        stream.forEach(System.out::println);
-        // stream.forEach(System.out::println);  // IllegalStateException!
-        
-        // Stream manbani o'zgartirmaydi
-        Stream<String> upperStream = collection.stream()
-            .map(String::toUpperCase);
-        
-        System.out.println(collection);  // [a, b, c] - o'zgarmadi
-    }
-}
+// Collection - bu hovuzdagi suv (bir joyda turibdi)
+List<String> names = Arrays.asList("Ali", "Vali", "Soli");
+
+// Stream - bu quvurdan oqayotgan suv (bir martalik)
+Stream<String> nameStream = names.stream();
+```
+
+### 2. Stream bir marta ishlatiladi
+
+```java
+Stream<String> stream = names.stream();
+stream.forEach(System.out::println);
+stream.forEach(System.out::println); // ERROR! Stream already consumed
+```
+
+Bu xuddi bir marta ichiladigan suvga o'xshaydi - bir marta oqizib bo'lgach, qayta ishlatib bo'lmaydi.
+
+### 3. Stream manbani o'zgartirmaydi
+
+```java
+List<String> original = Arrays.asList("Ali", "Vali", "Soli");
+
+original.stream()
+    .map(String::toUpperCase)
+    .forEach(System.out::println);
+
+System.out.println(original); // [Ali, Vali, Soli] - o'zgarmadi!
+```
+
+Stream asl kolleksiyani o'zgartirmaydi, faqat uning ustida hisoblashlar bajaradi.
+
+---
+
+## Intermediate Operations (Oraliq operatsiyalar)
+
+Oraliq operatsiyalar - "nimani xohlaymiz"ni aytadigan, lekin darhol bajarmaydigan operatsiyalar.
+
+### filter() - Shart bo'yicha tanlash
+
+```java
+// filter - berilgan shartga mos keladigan elementlarni olib beradi
+// Predicate qabul qiladi (shartni tekshiruvchi funksiya)
+
+List<Employee> employees = getEmployees();
+
+// 30 yoshdan katta xodimlar
+Stream<Employee> over30 = employees.stream()
+    .filter(emp -> emp.getAge() > 30);
+// Bu yerda hech narsa bajarilmaydi! Faqat "rejalashtiriladi"
+```
+
+**Nima bo'lyapti?** Stream "eslab qoladi": "Menga faqat yoshi 30 dan katta bo'lgan xodimlarni ber". Lekin hali hech narsa hisoblanmadi.
+
+### map() - O'zgartirish
+
+```java
+// map - har bir elementni olib, uni boshqa narsaga aylantiradi
+// Function qabul qiladi (bir turni boshqa turga aylantiruvchi)
+
+// Xodimlarning ismlarini olish
+Stream<String> names = employees.stream()
+    .filter(emp -> emp.getAge() > 30)
+    .map(emp -> emp.getFullName());
+```
+
+**Nima bo'lyapti?** Stream endi "Menga 30 dan katta xodimlarning ismlarini ber" deb eslab qoldi. Hali hech narsa hisoblanmadi!
+
+### sorted() - Saralash
+
+```java
+// sorted - elementlarni tartibga soladi
+
+Stream<String> sortedNames = employees.stream()
+    .filter(emp -> emp.getAge() > 30)
+    .map(Employee::getFullName)
+    .sorted(); // Alfavit bo'yicha saralaydi
+```
+
+**Muhim:** `sorted` barcha elementlarni ko'rishi kerak, shuning uchun u "stateful" operatsiya - hamma elementlarni eslab qolishi kerak.
+
+### limit() va skip() - Cheklash
+
+```java
+// limit - faqat birinchi n ta elementni oladi
+// skip - birinchi n ta elementni tashlab ketadi
+
+Stream<String> top5 = employees.stream()
+    .filter(emp -> emp.getAge() > 30)
+    .map(Employee::getFullName)
+    .sorted()
+    .limit(5)  // Faqat birinchi 5 tasini ol
+    .skip(2);  // Ulardan ham dastlabki 2 tasini tashla (3,4,5-chilar qoladi)
+```
+
+### distinct() - Takrorlanmas elementlar
+
+```java
+// distinct - faqat unikal elementlarni olib beradi
+
+Stream<String> uniqueCountries = employees.stream()
+    .map(Employee::getCountry)
+    .distinct(); // Har bir mamlakat faqat bir marta
+```
+
+### peek() - Ko'zdan kechirish
+
+```java
+// peek - har bir elementni ko'rish imkonini beradi (debug uchun)
+
+Stream<String> debugged = employees.stream()
+    .peek(emp -> System.out.println("Before filter: " + emp))
+    .filter(emp -> emp.getAge() > 30)
+    .peek(emp -> System.out.println("After filter: " + emp))
+    .map(Employee::getFullName)
+    .peek(name -> System.out.println("After map: " + name));
+```
+
+**Nima uchun peek kerak?** Nima bo'layotganini tushunish uchun. Terminal operatsiyadan keyin natija ko'rinadi.
+
+---
+
+## Terminal Operations (Yakunlovchi operatsiyalar)
+
+Terminal operatsiyalar - stream'ni "ishga tushiradigan", haqiqiy hisoblashlarni boshlaydigan operatsiyalar.
+
+### forEach() - Har bir element uchun amal bajarish
+
+```java
+// forEach - har bir element bilan nimadir qilish
+
+employees.stream()
+    .filter(emp -> emp.getAge() < 18)
+    .forEach(emp -> System.out.println(emp.getFullName() + " is minor"));
+```
+
+**Nima bo'lyapti?** Stream endi ishga tushdi. Yuqoridagi barcha rejalashtirilgan operatsiyalar bajariladi va natija konsolga chiqariladi.
+
+### collect() - Natijalarni yig'ish
+
+```java
+// collect - stream elementlarini kolleksiyaga yig'adi
+
+// List ga yig'ish
+List<String> names = employees.stream()
+    .filter(emp -> emp.getAge() > 30)
+    .map(Employee::getFullName)
+    .collect(Collectors.toList()); // Java 16+ da .toList() ham bor
+
+// Set ga yig'ish
+Set<String> countries = employees.stream()
+    .map(Employee::getCountry)
+    .collect(Collectors.toSet());
+
+// Map ga yig'ish
+Map<Integer, String> idToName = employees.stream()
+    .collect(Collectors.toMap(
+        Employee::getId,      // key ni olish
+        Employee::getFullName // value ni olish
+    ));
+```
+
+### count() - Elementlar soni
+
+```java
+// count - nechta element borligini hisoblaydi
+
+long adultsCount = employees.stream()
+    .filter(emp -> emp.getAge() >= 18)
+    .count();
+
+System.out.println("Kattalar soni: " + adultsCount);
+```
+
+### anyMatch(), allMatch(), noneMatch() - Shartlarni tekshirish
+
+```java
+// anyMatch - kamida bittasi shartga mos keladimi?
+boolean hasAnyFemale = employees.stream()
+    .anyMatch(emp -> "FEMALE".equals(emp.getGender()));
+
+// allMatch - hammasi shartga mos keladimi?
+boolean allAdults = employees.stream()
+    .allMatch(emp -> emp.getAge() >= 18);
+
+// noneMatch - hech biri shartga mos kelmaydimi?
+boolean noMinors = employees.stream()
+    .noneMatch(emp -> emp.getAge() < 18);
+```
+
+**Qanday ishlaydi?** Bu metodlar "short-circuiting" - shart bajarilishi bilan to'xtaydi. Masalan, `anyMatch` birinchi mos keladigan elementni topgach, qolganlarini tekshirmaydi.
+
+### findFirst(), findAny() - Element topish
+
+```java
+// findFirst - birinchi elementni qaytaradi
+Optional<Employee> firstFemale = employees.stream()
+    .filter(emp -> "FEMALE".equals(emp.getGender()))
+    .findFirst();
+
+// findAny - ixtiyoriy elementni qaytaradi (parallel stream'da tezroq)
+Optional<Employee> anyFemale = employees.parallelStream()
+    .filter(emp -> "FEMALE".equals(emp.getGender()))
+    .findAny();
+
+// Optional bilan ishlash
+firstFemale.ifPresent(emp -> 
+    System.out.println("Topildi: " + emp.getFullName()));
+
+// Agar topilmasa, default qiymat
+Employee defaultEmp = firstFemale.orElse(new Employee());
+```
+
+### reduce() - Qisqartirish
+
+```java
+// reduce - barcha elementlarni bittaga "qisqartiradi"
+
+// Yig'indi hisoblash
+Optional<Integer> sum = numbers.stream()
+    .reduce((a, b) -> a + b);
+
+// Identity bilan (boshlang'ich qiymat)
+int sumWithIdentity = numbers.stream()
+    .reduce(0, (a, b) -> a + b); // 0 + 1 + 2 + ...
+
+// Maksimum topish
+Optional<Integer> max = numbers.stream()
+    .reduce(Integer::max);
+
+// String birlashtirish
+Optional<String> combined = names.stream()
+    .reduce((s1, s2) -> s1 + ", " + s2);
 ```
 
 ---
 
-## 11.2 - Stream manbalari (Sources)
+## Stream'ni nima uchun ishlatamiz?
 
-### Stream yaratish usullari
+### 1. Ma'lumotlarni filtrlash (Filter)
 
 ```java
-import java.util.stream.*;
-import java.nio.file.*;
-import java.util.*;
-
-public class StreamSources {
-    public static void main(String[] args) throws IOException {
-        
-        // 1. Collection dan
-        List<String> list = Arrays.asList("a", "b", "c");
-        Stream<String> stream1 = list.stream();
-        Stream<String> parallelStream = list.parallelStream();
-        
-        // 2. Array dan
-        int[] numbers = {1, 2, 3, 4, 5};
-        IntStream stream2 = Arrays.stream(numbers);
-        Stream<String> stream3 = Stream.of("a", "b", "c");
-        
-        // 3. Static factory metodlar
-        IntStream range = IntStream.range(1, 10);      // 1-9
-        IntStream rangeClosed = IntStream.rangeClosed(1, 10); // 1-10
-        
-        Stream<Integer> iterate = Stream.iterate(0, n -> n + 2)
-            .limit(5);  // 0,2,4,6,8
-        
-        Stream<Double> generate = Stream.generate(Math::random)
-            .limit(5);
-        
-        // 4. File dan
-        Stream<String> lines = Files.lines(Paths.get("file.txt"));
-        
-        // 5. Random dan
-        IntStream randomInts = new Random().ints(5, 1, 100);
-        
-        // 6. StringBuilder/BufferedReader dan
-        String str = "hello\nworld";
-        Stream<String> lines2 = str.lines();
-        
-        // 7. Pattern dan
-        Stream<String> words = Pattern.compile(" ")
-            .splitAsStream("Java Stream API");
+// Eski usul - for loop va if
+List<Employee> result = new ArrayList<>();
+for (Employee emp : employees) {
+    if (emp.getAge() > 30 && "Tashkent".equals(emp.getCity())) {
+        result.add(emp);
     }
 }
+
+// Stream usuli - nima qilayotganingiz aniq
+List<Employee> result = employees.stream()
+    .filter(emp -> emp.getAge() > 30)
+    .filter(emp -> "Tashkent".equals(emp.getCity()))
+    .toList();
 ```
 
-### Employee ma'lumotlari bilan ishlash
+### 2. Ma'lumotlarni o'zgartirish (Map)
 
 ```java
-// employees.json faylidan ma'lumotlarni o'qish
-Path path = Path.of("employees.json");
-String jsonData = Files.readString(path);
-Gson gson = new Gson();
-Type type = new TypeToken<List<Employee>>(){}.getType();
-List<Employee> employees = gson.fromJson(jsonData, type);
+// Xodimlar ro'yxatidan ismlar ro'yxatini olish
+List<String> names = employees.stream()
+    .map(Employee::getFullName)
+    .toList();
 
-// Employee class
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+// Xodimlarning yoshlarini olish
+List<Integer> ages = employees.stream()
+    .map(Employee::getAge)
+    .toList();
+
+// Har bir xodim haqida qisqa ma'lumot
+List<String> descriptions = employees.stream()
+    .map(emp -> emp.getFullName() + " (" + emp.getAge() + " yosh)")
+    .toList();
+```
+
+### 3. Ma'lumotlarni guruhlash (Grouping)
+
+```java
+// Gender bo'yicha guruhlash
+Map<String, List<Employee>> byGender = employees.stream()
+    .collect(Collectors.groupingBy(Employee::getGender));
+
+// Mamlakat bo'yicha xodimlar soni
+Map<String, Long> countByCountry = employees.stream()
+    .collect(Collectors.groupingBy(
+        Employee::getCountry,
+        Collectors.counting()
+    ));
+
+// Yosh oralig'i bo'yicha guruhlash
+Map<String, List<Employee>> byAgeGroup = employees.stream()
+    .collect(Collectors.groupingBy(emp -> {
+        if (emp.getAge() < 18) return "Yosh";
+        else if (emp.getAge() < 30) return "Yosh kattalar";
+        else return "Kattalar";
+    }));
+```
+
+### 4. Statistika hisoblash (Statistics)
+
+```java
+// O'rtacha yosh
+double averageAge = employees.stream()
+    .mapToInt(Employee::getAge)
+    .average()
+    .orElse(0);
+
+// Eng yosh va eng keksa xodim
+Optional<Employee> youngest = employees.stream()
+    .min(Comparator.comparingInt(Employee::getAge));
+
+Optional<Employee> oldest = employees.stream()
+    .max(Comparator.comparingInt(Employee::getAge));
+
+// To'liq statistika
+IntSummaryStatistics stats = employees.stream()
+    .mapToInt(Employee::getAge)
+    .summaryStatistics();
+
+System.out.println("Jami: " + stats.getCount());
+System.out.println("O'rtacha: " + stats.getAverage());
+System.out.println("Min: " + stats.getMin());
+System.out.println("Max: " + stats.getMax());
+System.out.println("Yig'indi: " + stats.getSum());
+```
+
+### 5. Ma'lumotlarni saralash (Sorting)
+
+```java
+// Yosh bo'yicha saralash (o'sish)
+List<Employee> byAgeAsc = employees.stream()
+    .sorted(Comparator.comparingInt(Employee::getAge))
+    .toList();
+
+// Yosh bo'yicha saralash (kamayish)
+List<Employee> byAgeDesc = employees.stream()
+    .sorted(Comparator.comparingInt(Employee::getAge).reversed())
+    .toList();
+
+// Ism bo'yicha saralash
+List<Employee> byName = employees.stream()
+    .sorted(Comparator.comparing(Employee::getFullName))
+    .toList();
+
+// Bir necha mezon bo'yicha saralash
+List<Employee> sorted = employees.stream()
+    .sorted(Comparator
+        .comparing(Employee::getCountry)
+        .thenComparingInt(Employee::getAge))
+    .toList();
+```
+
+### 6. Eng kichik/katta qiymatlarni olish (Min/Max)
+
+```java
+// Eng katta yosh
+int maxAge = employees.stream()
+    .mapToInt(Employee::getAge)
+    .max()
+    .orElse(0);
+
+// Eng uzun ism
+Optional<String> longestName = employees.stream()
+    .map(Employee::getFullName)
+    .max(Comparator.comparingInt(String::length));
+
+// Eng ko'p xodimli mamlakat
+Optional<Map.Entry<String, Long>> mostEmployees = employees.stream()
+    .collect(Collectors.groupingBy(
+        Employee::getCountry,
+        Collectors.counting()
+    ))
+    .entrySet().stream()
+    .max(Map.Entry.comparingByValue());
+```
+
+---
+
+## Stream ishlatishda muhim tushunchalar
+
+### 1. Lazy evaluation (Kechiktirilgan hisoblash)
+
+```java
+Stream<String> stream = employees.stream()
+    .filter(emp -> {
+        System.out.println("Filter: " + emp.getFullName());
+        return emp.getAge() > 30;
+    })
+    .map(emp -> {
+        System.out.println("Map: " + emp.getFullName());
+        return emp.getFullName();
+    });
+
+// Hech narsa chiqmaydi! Stream hali ishga tushmadi
+
+stream.forEach(System.out::println); // ENDI ishlaydi
+```
+
+**Nima uchun lazy?** Samaradorlik uchun. Agar terminal operatsiya bo'lmasa, oraliq operatsiyalarni bajarishning ma'nosi yo'q.
+
+### 2. Short-circuiting (Erta to'xtash)
+
+```java
+// limit() bilan - 1000000 ta element bo'lsa ham tez ishlaydi
+Stream.iterate(1, n -> n + 1)
+    .filter(n -> n % 2 == 0)
+    .limit(10)  // Faqat 10 ta kerak, qolganini hisoblamaydi
+    .forEach(System.out::println);
+
+// findFirst() bilan - birinchi mos keladigan topilgach to'xtaydi
+employees.stream()
+    .filter(emp -> emp.getAge() > 50)
+    .findFirst()  // Topilgach, qolganlarini tekshirmaydi
+    .ifPresent(System.out::println);
+```
+
+### 3. Parallel streams
+
+```java
+// Parallel stream - bir necha yadrodan foydalanadi
+long count = employees.parallelStream()
+    .filter(emp -> emp.getAge() > 30)
+    .count();
+
+// Qachon ishlatish kerak?
+// - Katta ma'lumotlar (>10,000 element)
+// - CPU intensive operatsiyalar
+// - Order muhim bo'lmaganda
+
+// Qachon ishlatmaslik kerak?
+// - Kichik ma'lumotlar
+// - I/O operatsiyalar (fayl o'qish, network)
+// - findFirst() kabi order muhim bo'lganda
+```
+
+---
+
+## Oddiy misollar bilan tushunamiz
+
+### Misol 1: Mevalar bilan ishlash
+
+Tasavvur qiling, sizda mevalar ro'yxati bor:
+
+```java
+List<String> fruits = Arrays.asList(
+    "olma", "banan", "apelsin", "anor", 
+    "uzum", "olcha", "shaftoli", "gilos"
+);
+
+// 1. Faqat "a" harfi bilan boshlanadigan mevalarni toping
+List<String> startsWithA = fruits.stream()
+    .filter(fruit -> fruit.startsWith("a"))
+    .toList();  // [olma, anor, olcha] (o'zbekchada 'a' bilan boshlanadi)
+
+// 2. Meva nomlarini bosh harf bilan yozing
+List<String> capitalized = fruits.stream()
+    .map(fruit -> fruit.substring(0, 1).toUpperCase() + fruit.substring(1))
+    .toList();  // [Olma, Banan, Apelsin, ...]
+
+// 3. Eng uzun meva nomini toping
+Optional<String> longest = fruits.stream()
+    .max(Comparator.comparingInt(String::length));
+
+// 4. 5 ta harfdan uzun mevalarni saralab, birinchi 3 tasini oling
+List<String> result = fruits.stream()
+    .filter(fruit -> fruit.length() > 5)
+    .sorted()
+    .limit(3)
+    .toList();
+```
+
+### Misol 2: Talabalar bilan ishlash
+
+```java
+class Student {
+    private String name;
+    private int grade;
+    private String group;
+    
+    // constructor, getters...
+}
+
+List<Student> students = getStudents();
+
+// 1. 80 balldan yuqori olgan talabalar
+List<Student> excellent = students.stream()
+    .filter(s -> s.getGrade() > 80)
+    .toList();
+
+// 2. Har bir guruhdagi o'rtacha ball
+Map<String, Double> avgByGroup = students.stream()
+    .collect(Collectors.groupingBy(
+        Student::getGroup,
+        Collectors.averagingInt(Student::getGrade)
+    ));
+
+// 3. Eng yuqori ball olgan talaba
+Optional<Student> bestStudent = students.stream()
+    .max(Comparator.comparingInt(Student::getGrade));
+
+// 4. Talabalarni baho bo'yicha saralash (yuqoridan pastga)
+List<Student> sortedByGrade = students.stream()
+    .sorted((s1, s2) -> Integer.compare(s2.getGrade(), s1.getGrade()))
+    .toList();
+
+// 5. "A" guruhidagi talabalarning ismlari
+List<String> groupANames = students.stream()
+    .filter(s -> "A".equals(s.getGroup()))
+    .map(Student::getName)
+    .toList();
+```
+
+### Misol 3: Ishchilar va maoshlar
+
+```java
 class Employee {
-    private int id;
-    private String full_name;
-    private String gender;
-    private int age;
-    private String country;
+    private String name;
+    private String department;
+    private double salary;
+    
+    // constructor, getters...
 }
+
+List<Employee> employees = getEmployees();
+
+// 1. Maoshi 1000$ dan yuqori bo'lgan ishchilar
+List<Employee> highEarners = employees.stream()
+    .filter(e -> e.getSalary() > 1000)
+    .toList();
+
+// 2. Har bir departamentdagi o'rtacha maosh
+Map<String, Double> avgSalaryByDept = employees.stream()
+    .collect(Collectors.groupingBy(
+        Employee::getDepartment,
+        Collectors.averagingDouble(Employee::getSalary)
+    ));
+
+// 3. Eng ko'p maosh oladigan 3 ta ishchi
+List<Employee> top3 = employees.stream()
+    .sorted((e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()))
+    .limit(3)
+    .toList();
+
+// 4. Barcha ishchilarning umumiy maoshi
+double totalSalary = employees.stream()
+    .mapToDouble(Employee::getSalary)
+    .sum();
+
+// 5. Maoshi o'rtachadan yuqori bo'lgan ishchilar
+double avgSalary = employees.stream()
+    .mapToDouble(Employee::getSalary)
+    .average()
+    .orElse(0);
+
+List<Employee> aboveAverage = employees.stream()
+    .filter(e -> e.getSalary() > avgSalary)
+    .toList();
 ```
 
 ---
 
-## 11.3 - Stream operatsiyalari
+## Stream vs Oddiy kod - solishtirish
 
-### Intermediate vs Terminal operations
-
-```
-Source (Collection) 
-    -> [Intermediate ops] (0..n) 
-    -> [Terminal op] 
-    -> Result
-```
-
-| Intermediate (Lazy) | Terminal (Eager) |
-|---------------------|------------------|
-| `filter()` | `forEach()` |
-| `map()` | `collect()` |
-| `flatMap()` | `toList()` |
-| `distinct()` | `reduce()` |
-| `sorted()` | `count()` |
-| `limit()` | `anyMatch()` |
-| `skip()` | `allMatch()` |
-| `peek()` | `noneMatch()` |
-| | `findFirst()` |
-| | `findAny()` |
-| | `min()`/`max()` |
-| | `toArray()` |
-
----
-
-## 11.4 - Filtrlash (Filtering)
-
-### filter() - Predicate asosida filtrlash
+### 1-topshiriq: 20 yoshdan katta ayollarning ismlarini alfavit bo'yicha saralab, birinchi 5 tasini olish
 
 ```java
-public class FilteringExample {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. Oddiy filter
-        List<Employee> females = employees.stream()
-            .filter(emp -> "FEMALE".equals(emp.getGender()))
-            .toList();
-        
-        // 2. Mantiqiy operatorlar bilan
-        Predicate<Employee> isFemale = emp -> "FEMALE".equals(emp.getGender());
-        Predicate<Employee> isAdult = emp -> emp.getAge() > 18;
-        Predicate<Employee> isFemaleAdult = isFemale.and(isAdult);
-        
-        List<Employee> femaleAdults = employees.stream()
-            .filter(isFemaleAdult)
-            .toList();
-        
-        // 3. Bir nechta filter
-        List<Employee> result = employees.stream()
-            .filter(emp -> emp.getAge() > 25)
-            .filter(emp -> "MALE".equals(emp.getGender()))
-            .filter(emp -> emp.getCountry().equals("uzb"))
-            .toList();
-        
-        // 4. Predicate composition
-        Predicate<Employee> ageRange = emp -> emp.getAge() >= 20 && emp.getAge() <= 30;
-        Predicate<Employee> isUzbOrPak = emp -> 
-            "uzb".equals(emp.getCountry()) || "pak".equals(emp.getCountry());
-        
-        employees.stream()
-            .filter(ageRange.and(isUzbOrPak))
-            .forEach(System.out::println);
+// Oddiy kod
+List<String> result = new ArrayList<>();
+for (Employee emp : employees) {
+    if (emp.getAge() > 20 && "FEMALE".equals(emp.getGender())) {
+        result.add(emp.getFullName());
     }
 }
+Collections.sort(result);
+List<String> finalResult = new ArrayList<>();
+for (int i = 0; i < Math.min(5, result.size()); i++) {
+    finalResult.add(result.get(i));
+}
+
+// Stream kodi
+List<String> result = employees.stream()
+    .filter(emp -> emp.getAge() > 20)
+    .filter(emp -> "FEMALE".equals(emp.getGender()))
+    .map(Employee::getFullName)
+    .sorted()
+    .limit(5)
+    .toList();
 ```
 
----
+Qaysi biri tushunarli? Stream kodi o'qiladi: "filter qil, filter qil, map qil, sort qil, limit qil, collect qil"
 
-## 11.5 - Kesish (Truncating)
-
-### limit() va skip()
+### 2-topshiriq: Har bir mamlakatdagi eng yosh ishchini topish
 
 ```java
-public class TruncatingExample {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. limit - boshidan n ta element
-        List<Employee> first10 = employees.stream()
-            .limit(10)
-            .toList();
-        
-        // 2. skip - boshidan n ta elementni tashlab ketish
-        List<Employee> afterFirst10 = employees.stream()
-            .skip(10)
-            .limit(10)  // 11-20 gacha
-            .toList();
-        
-        // 3. Pagination misoli
-        int pageSize = 20;
-        int pageNumber = 2;
-        
-        List<Employee> page = employees.stream()
-            .skip((pageNumber - 1) * pageSize)
-            .limit(pageSize)
-            .toList();
-        
-        // 4. Cheksiz stream ni cheklash
-        Stream.iterate(1, n -> n + 1)
-            .filter(n -> n % 2 == 0)
-            .limit(10)
-            .forEach(System.out::println);
+// Oddiy kod - murakkab
+Map<String, Employee> youngestByCountry = new HashMap<>();
+for (Employee emp : employees) {
+    String country = emp.getCountry();
+    Employee current = youngestByCountry.get(country);
+    if (current == null || emp.getAge() < current.getAge()) {
+        youngestByCountry.put(country, emp);
     }
 }
+
+// Stream kodi - aniq
+Map<String, Optional<Employee>> youngestByCountry = employees.stream()
+    .collect(Collectors.groupingBy(
+        Employee::getCountry,
+        Collectors.minBy(Comparator.comparingInt(Employee::getAge))
+    ));
 ```
 
 ---
 
-## 11.6 - Iste'mol qilish (Consuming)
+## Xulosa
 
-### peek() va forEach()
+**Stream API** - bu ma'lumotlar bilan ishlashning yangi usuli. U:
 
-```java
-public class ConsumingExample {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. peek - intermediate, debugging uchun
-        List<String> names = employees.stream()
-            .peek(emp -> System.out.println("Original: " + emp))
-            .filter(emp -> emp.getAge() > 25)
-            .peek(emp -> System.out.println("After filter: " + emp))
-            .map(Employee::getFull_name)
-            .peek(name -> System.out.println("After map: " + name))
-            .toList();
-        
-        // 2. forEach - terminal, har bir element uchun action
-        employees.stream()
-            .filter(emp -> emp.getAge() < 18)
-            .forEach(emp -> 
-                System.out.println(emp.getFull_name() + " is minor"));
-        
-        // 3. forEachOrdered - parallel stream'da tartibni saqlash
-        employees.parallelStream()
-            .forEachOrdered(System.out::println);
-        
-        // 4. peek bilan o'zgartirish (tavsiya etilmaydi!)
-        List<Employee> modified = employees.stream()
-            .peek(emp -> emp.setAge(emp.getAge() + 1))  // Side-effect!
-            .toList();
-        // ❌ Yomon - stream manbani o'zgartirmasligi kerak
-    }
-}
-```
+1. **Nimani xohlaymiz**ni aytish imkonini beradi, **qanday qilish**ni emas
+2. Kodni qisqa va tushunarli qiladi
+3. Xatolarni kamaytiradi
+4. Parallel ishlashni osonlashtiradi
 
----
+**Esda tuting:**
+- Stream bir marta ishlatiladi
+- Stream manbani o'zgartirmaydi
+- Stream lazy ishlaydi (terminal operatsiya kerak)
+- Stream'lar collection'lar o'rnini bosmaydi, ular bilan birga ishlaydi
 
-## 11.7 - Matching (Tekshirish)
+**Qachon ishlatish kerak?**
+- Ma'lumotlarni filtrlashda
+- Ma'lumotlarni o'zgartirishda
+- Ma'lumotlarni guruhlashda
+- Statistika hisoblashda
+- Ma'lumotlarni saralashda
 
-### anyMatch(), allMatch(), noneMatch()
-
-```java
-public class MatchingExample {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. anyMatch - kamida bitta element shartga mos keladimi?
-        boolean hasAnyFemale = employees.stream()
-            .anyMatch(emp -> "FEMALE".equals(emp.getGender()));
-        
-        boolean hasAnyMinor = employees.stream()
-            .anyMatch(emp -> emp.getAge() < 18);
-        
-        // 2. allMatch - hamma elementlar shartga mos keladimi?
-        boolean allAdults = employees.stream()
-            .allMatch(emp -> emp.getAge() >= 18);
-        
-        boolean allHaveName = employees.stream()
-            .allMatch(emp -> emp.getFull_name() != null);
-        
-        // 3. noneMatch - hech bir element shartga mos kelmaydimi?
-        boolean noneUnder18 = employees.stream()
-            .noneMatch(emp -> emp.getAge() < 18);
-        
-        boolean noneInvalid = employees.stream()
-            .noneMatch(emp -> emp.getId() <= 0);
-        
-        // 4. Short-circuiting misoli
-        boolean result = employees.stream()
-            .peek(emp -> System.out.println("Checking: " + emp.getId()))
-            .anyMatch(emp -> emp.getAge() > 30);
-        // 30 dan katta topilgach, to'xtaydi
-        
-        // 5. Mantiqiy kombinatsiyalar
-        Predicate<Employee> isFemale = emp -> "FEMALE".equals(emp.getGender());
-        Predicate<Employee> isUzb = emp -> "uzb".equals(emp.getCountry());
-        
-        boolean anyFemaleUzb = employees.stream()
-            .anyMatch(isFemale.and(isUzb));
-    }
-}
-```
-
----
-
-## 11.8 - Mapping (Akslantirish)
-
-### map()
-
-```java
-public class MappingExample {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. Oddiy map - bir turdan ikkinchi turga
-        List<String> names = employees.stream()
-            .map(Employee::getFull_name)
-            .toList();
-        
-        List<Integer> ages = employees.stream()
-            .map(Employee::getAge)
-            .toList();
-        
-        // 2. Object yaratish
-        record EmpInfo(String name, int age) {}
-        
-        List<EmpInfo> empInfos = employees.stream()
-            .map(emp -> new EmpInfo(emp.getFull_name(), emp.getAge()))
-            .toList();
-        
-        // 3. Primitive stream'larga map
-        IntStream ageStream = employees.stream()
-            .mapToInt(Employee::getAge);
-        
-        DoubleStream averageAge = employees.stream()
-            .mapToDouble(Employee::getAge)
-            .average()
-            .stream();
-        
-        // 4. map bilan hisoblash
-        int totalAge = employees.stream()
-            .mapToInt(Employee::getAge)
-            .sum();
-        
-        double avgAge = employees.stream()
-            .mapToInt(Employee::getAge)
-            .average()
-            .orElse(0);
-    }
-}
-```
-
-### flatMap()
-
-```java
-public class FlatMapExample {
-    public static void main(String[] args) {
-        
-        // 1. Stream of streams ni birlashtirish
-        List<List<String>> listOfLists = Arrays.asList(
-            Arrays.asList("a", "b", "c"),
-            Arrays.asList("d", "e", "f"),
-            Arrays.asList("g", "h", "i")
-        );
-        
-        // map -> Stream<Stream<String>>
-        Stream<Stream<String>> mapped = listOfLists.stream()
-            .map(list -> list.stream());
-        
-        // flatMap -> Stream<String>
-        Stream<String> flatMapped = listOfLists.stream()
-            .flatMap(List::stream);
-        
-        // 2. Matn faylidagi so'zlar
-        List<String> lines = Arrays.asList(
-            "Hello world",
-            "Java stream api",
-            "flatMap example"
-        );
-        
-        List<String> words = lines.stream()
-            .flatMap(line -> Arrays.stream(line.split(" ")))
-            .distinct()
-            .toList();  // [Hello, world, Java, stream, api, flatMap, example]
-        
-        // 3. Ikki o'lchovli massiv
-        int[][] matrix = {{1, 2}, {3, 4}, {5, 6}};
-        
-        int[] flattened = Arrays.stream(matrix)
-            .flatMapToInt(Arrays::stream)
-            .toArray();  // [1,2,3,4,5,6]
-        
-        // 4. Optional'lar bilan
-        List<Optional<String>> optionals = Arrays.asList(
-            Optional.of("a"),
-            Optional.empty(),
-            Optional.of("b"),
-            Optional.of("c")
-        );
-        
-        List<String> values = optionals.stream()
-            .flatMap(Optional::stream)
-            .toList();  // [a, b, c]
-        
-        // 5. Employee misoli - kitoblar
-        record Book(String id, String name) {}
-        
-        List<Employee> employees = Arrays.asList(
-            new Employee(1, "Ali", Arrays.asList(
-                new Book("1", "Java"), 
-                new Book("2", "Python"))),
-            new Employee(2, "Vali", Arrays.asList(
-                new Book("3", "SQL")))
-        );
-        
-        List<Book> allBooks = employees.stream()
-            .flatMap(emp -> emp.getBooks().stream())
-            .distinct()
-            .toList();
-    }
-}
-```
-
----
-
-## 11.9 - Finding (Topish)
-
-### findFirst() va findAny()
-
-```java
-public class FindingExample {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. findFirst - birinchi element
-        Optional<Employee> first = employees.stream()
-            .filter(emp -> emp.getAge() > 25)
-            .findFirst();
-        
-        first.ifPresent(emp -> 
-            System.out.println("First over 25: " + emp));
-        
-        // 2. findAny - ixtiyoriy element (parallel stream'da muhim)
-        Optional<Employee> anyFemale = employees.parallelStream()
-            .filter(emp -> "FEMALE".equals(emp.getGender()))
-            .findAny();  // Parallel'da tezroq
-        
-        // 3. Optional bilan ishlash
-        Employee result = employees.stream()
-            .filter(emp -> emp.getAge() > 50)
-            .findFirst()
-            .orElse(new Employee());  // Default
-        
-        Employee result2 = employees.stream()
-            .filter(emp -> emp.getAge() > 50)
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("No employee found"));
-        
-        // 4. ifPresentOrElse
-        employees.stream()
-            .filter(emp -> emp.getCountry().equals("uzb"))
-            .findFirst()
-            .ifPresentOrElse(
-                emp -> System.out.println("Found: " + emp),
-                () -> System.out.println("No Uzbek employee")
-            );
-    }
-}
-```
-
----
-
-## 11.10 - Reducing (Qisqartirish)
-
-### reduce()
-
-```java
-public class ReducingExample {
-    public static void main(String[] args) {
-        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
-        
-        // 1. Identity bilan reduce
-        int sum = numbers.stream()
-            .reduce(0, (a, b) -> a + b);  // 15
-        
-        int product = numbers.stream()
-            .reduce(1, (a, b) -> a * b);  // 120
-        
-        // 2. Identity siz reduce (Optional qaytaradi)
-        Optional<Integer> max = numbers.stream()
-            .reduce(Integer::max);  // Optional[5]
-        
-        Optional<Integer> min = numbers.stream()
-            .reduce(Integer::min);  // Optional[1]
-        
-        // 3. String concat
-        List<String> words = Arrays.asList("Java", "Stream", "API");
-        
-        Optional<String> sentence = words.stream()
-            .reduce((s1, s2) -> s1 + " " + s2);
-        
-        sentence.ifPresent(System.out::println);  // "Java Stream API"
-        
-        // 4. Employee misoli - eng yosh employee
-        Optional<Employee> youngest = employees.stream()
-            .reduce((e1, e2) -> e1.getAge() < e2.getAge() ? e1 : e2);
-        
-        // 5. Complex reduction
-        Employee combined = employees.stream()
-            .reduce(
-                new Employee(0, "", "", 0, ""),  // identity
-                (result, emp) -> {
-                    result.setAge(result.getAge() + emp.getAge());
-                    return result;
-                },  // accumulator
-                (r1, r2) -> {
-                    r1.setAge(r1.getAge() + r2.getAge());
-                    return r1;
-                }  // combiner (parallel uchun)
-            );
-    }
-}
-```
-
----
-
-## 11.11 - Collecting (Yig'ish)
-
-### collect() bilan to'plash
-
-```java
-import java.util.stream.Collectors;
-
-public class CollectingExample {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. toList() (Java 16+)
-        List<String> names = employees.stream()
-            .map(Employee::getFull_name)
-            .toList();
-        
-        // 2. Collectors.toList()
-        List<Employee> adults = employees.stream()
-            .filter(emp -> emp.getAge() >= 18)
-            .collect(Collectors.toList());
-        
-        // 3. toSet()
-        Set<String> countries = employees.stream()
-            .map(Employee::getCountry)
-            .collect(Collectors.toSet());
-        
-        // 4. toMap()
-        Map<Integer, String> idToName = employees.stream()
-            .collect(Collectors.toMap(
-                Employee::getId,
-                Employee::getFull_name,
-                (v1, v2) -> v1  // conflict resolver
-            ));
-        
-        // 5. GroupingBy
-        Map<String, List<Employee>> byGender = employees.stream()
-            .collect(Collectors.groupingBy(Employee::getGender));
-        
-        // 6. PartitioningBy (boolean condition)
-        Map<Boolean, List<Employee>> partitioned = employees.stream()
-            .collect(Collectors.partitioningBy(
-                emp -> emp.getAge() >= 18
-            ));
-        
-        List<Employee> minors = partitioned.get(false);
-        List<Employee> adults2 = partitioned.get(true);
-        
-        // 7. Counting
-        Map<String, Long> countByGender = employees.stream()
-            .collect(Collectors.groupingBy(
-                Employee::getGender,
-                Collectors.counting()
-            ));
-        
-        // 8. Averaging
-        Map<String, Double> avgAgeByGender = employees.stream()
-            .collect(Collectors.groupingBy(
-                Employee::getGender,
-                Collectors.averagingInt(Employee::getAge)
-            ));
-        
-        // 9. Joining
-        String allNames = employees.stream()
-            .map(Employee::getFull_name)
-            .collect(Collectors.joining(", "));
-        
-        // 10. Summarizing
-        IntSummaryStatistics stats = employees.stream()
-            .collect(Collectors.summarizingInt(Employee::getAge));
-        
-        System.out.println("Count: " + stats.getCount());
-        System.out.println("Sum: " + stats.getSum());
-        System.out.println("Min: " + stats.getMin());
-        System.out.println("Max: " + stats.getMax());
-        System.out.println("Average: " + stats.getAverage());
-    }
-}
-```
-
----
-
-## 11.12 - Primitive Streams
-
-### IntStream, LongStream, DoubleStream
-
-```java
-public class PrimitiveStreams {
-    public static void main(String[] args) {
-        
-        // 1. IntStream yaratish
-        IntStream intStream1 = IntStream.range(1, 10);      // 1-9
-        IntStream intStream2 = IntStream.rangeClosed(1, 10); // 1-10
-        IntStream intStream3 = IntStream.of(1, 2, 3, 4, 5);
-        
-        // 2. Max/Min/Sum/Average
-        int max = IntStream.range(1, 100)
-            .max()
-            .orElse(0);
-        
-        int sum = IntStream.range(1, 100)
-            .sum();
-        
-        double avg = IntStream.range(1, 100)
-            .average()
-            .orElse(0);
-        
-        // 3. Statistics
-        IntSummaryStatistics stats = IntStream.range(1, 100)
-            .summaryStatistics();
-        
-        // 4. Boxed - primitive stream'ni Stream<Integer> ga
-        Stream<Integer> boxed = IntStream.range(1, 10)
-            .boxed();
-        
-        // 5. mapToObj
-        Stream<String> strings = IntStream.range(1, 5)
-            .mapToObj(i -> "Number: " + i);
-        
-        // 6. map operations
-        IntStream doubled = IntStream.range(1, 10)
-            .map(i -> i * 2);
-        
-        IntStream evenNumbers = IntStream.range(1, 20)
-            .filter(i -> i % 2 == 0);
-        
-        // 7. Range with custom step
-        IntStream.iterate(0, i -> i + 3)
-            .limit(10)
-            .forEach(System.out::println);  // 0,3,6,9,12,15,18,21,24,27
-    }
-}
-```
-
----
-
-## 11.13 - Cheksiz Stream'lar (Infinite Streams)
-
-### iterate() va generate()
-
-```java
-public class InfiniteStreams {
-    public static void main(String[] args) {
-        
-        // 1. Stream.iterate - oldingi qiymat asosida
-        Stream<Integer> evenNumbers = Stream.iterate(0, n -> n + 2)
-            .limit(10);
-        
-        // 2. Fibonacci with iterate
-        Stream.iterate(new int[]{0, 1}, f -> new int[]{f[1], f[0] + f[1]})
-            .limit(10)
-            .map(f -> f[0])
-            .forEach(System.out::println);
-        
-        // 3. Stream.generate - Supplier asosida
-        Stream<Double> randomNumbers = Stream.generate(Math::random)
-            .limit(5);
-        
-        Stream<UUID> uuids = Stream.generate(UUID::randomUUID)
-            .limit(5);
-        
-        // 4. Infinite stream'ni cheklash
-        Stream.iterate(1, n -> n + 1)
-            .filter(n -> n % 2 == 0)
-            .skip(10)  // first 10 even numbers
-            .limit(5)   // next 5 even numbers
-            .forEach(System.out::println);
-        
-        // 5. Java 9+ iterate with predicate
-        Stream.iterate(0, n -> n < 100, n -> n + 7)
-            .forEach(System.out::println);
-    }
-}
-```
-
----
-
-## 11.14 - Parallel Streams
-
-### parallel() va parallelStream()
-
-```java
-public class ParallelStreams {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. parallelStream() yaratish
-        employees.parallelStream()
-            .filter(emp -> emp.getAge() > 25)
-            .forEach(System.out::println);
-        
-        // 2. Stream ni parallel ga o'tkazish
-        employees.stream()
-            .parallel()
-            .map(Employee::getFull_name)
-            .forEach(System.out::println);
-        
-        // 3. Performance comparison
-        long start = System.currentTimeMillis();
-        
-        long sequential = employees.stream()
-            .filter(emp -> emp.getAge() > 20)
-            .count();
-        
-        long sequentialTime = System.currentTimeMillis() - start;
-        
-        start = System.currentTimeMillis();
-        
-        long parallel = employees.parallelStream()
-            .filter(emp -> emp.getAge() > 20)
-            .count();
-        
-        long parallelTime = System.currentTimeMillis() - start;
-        
-        System.out.println("Sequential: " + sequentialTime + "ms");
-        System.out.println("Parallel: " + parallelTime + "ms");
-        
-        // 4. Qachon parallel ishlatish kerak?
-        // - Katta hajmdagi ma'lumotlar (>10,000)
-        // - CPU intensive operations
-        // - Order muhim bo'lmaganda
-        
-        // 5. Qachon parallel ishlatmaslik kerak?
-        // - Kichik ma'lumotlar
-        // - I/O operations
-        // - findFirst() kabi order muhim bo'lganda
-    }
-}
-```
-
----
-
-## Amaliy misollar
-
-### Misol 1: Employee analitikasi
-
-```java
-public class EmployeeAnalytics {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. 30 yoshdan katta ayollar
-        List<Employee> matureFemales = employees.stream()
-            .filter(emp -> "FEMALE".equals(emp.getGender()))
-            .filter(emp -> emp.getAge() > 30)
-            .toList();
-        
-        // 2. Har bir yoshdagi employee'lar soni
-        Map<Integer, Long> countByAge = employees.stream()
-            .collect(Collectors.groupingBy(
-                Employee::getAge,
-                Collectors.counting()
-            ));
-        
-        // 3. Eng ko'p employee bo'lgan 3 ta mamlakat
-        List<Map.Entry<String, Long>> topCountries = employees.stream()
-            .collect(Collectors.groupingBy(
-                Employee::getCountry,
-                Collectors.counting()
-            ))
-            .entrySet().stream()
-            .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
-            .limit(3)
-            .toList();
-        
-        // 4. Gender bo'yicha o'rtacha yosh
-        Map<String, Double> avgAgeByGender = employees.stream()
-            .collect(Collectors.groupingBy(
-                Employee::getGender,
-                Collectors.averagingInt(Employee::getAge)
-            ));
-        
-        // 5. Yosh oralig'i bo'yicha guruhlash
-        Map<String, List<Employee>> byAgeGroup = employees.stream()
-            .collect(Collectors.groupingBy(emp -> {
-                if (emp.getAge() < 18) return "Minor";
-                else if (emp.getAge() < 30) return "Young Adult";
-                else if (emp.getAge() < 50) return "Adult";
-                else return "Senior";
-            }));
-    }
-}
-```
-
-### Misol 2: Stream operations pipeline
-
-```java
-public class PipelineExample {
-    public static void main(String[] args) {
-        List<Employee> employees = loadEmployees();
-        
-        // 1. Complex pipeline
-        List<String> result = employees.stream()
-            .filter(emp -> emp.getAge() >= 20 && emp.getAge() <= 40)
-            .filter(emp -> "MALE".equals(emp.getGender()))
-            .map(emp -> emp.getFull_name().toUpperCase())
-            .sorted()
-            .skip(5)
-            .limit(10)
-            .toList();
-        
-        // 2. With grouping and mapping
-        Map<String, List<String>> namesByCountry = employees.stream()
-            .filter(emp -> emp.getAge() > 25)
-            .collect(Collectors.groupingBy(
-                Employee::getCountry,
-                Collectors.mapping(
-                    Employee::getFull_name,
-                    Collectors.toList()
-                )
-            ));
-        
-        // 3. Find oldest in each country
-        Map<String, Optional<Employee>> oldestByCountry = employees.stream()
-            .collect(Collectors.groupingBy(
-                Employee::getCountry,
-                Collectors.maxBy(Comparator.comparingInt(Employee::getAge))
-            ));
-        
-        // 4. Partition and transform
-        Map<Boolean, List<String>> partitionedNames = employees.stream()
-            .collect(Collectors.partitioningBy(
-                emp -> emp.getAge() >= 30,
-                Collectors.mapping(Employee::getFull_name, Collectors.toList())
-            ));
-    }
-}
-```
-
----
-
-## Stream API Reference
-
-### Intermediate Operations
-
-| Operation | Return | Description |
-|-----------|--------|-------------|
-| `filter(Predicate)` | `Stream` | Shartga mos elementlar |
-| `map(Function)` | `Stream` | Transformatsiya |
-| `flatMap(Function)` | `Stream` | Stream'larni birlashtirish |
-| `distinct()` | `Stream` | Unikal elementlar |
-| `sorted()` | `Stream` | Saralash |
-| `sorted(Comparator)` | `Stream` | Custom saralash |
-| `peek(Consumer)` | `Stream` | Side-effect (debug) |
-| `limit(long)` | `Stream` | Birinchi n ta element |
-| `skip(long)` | `Stream` | Birinchi n ta elementni tashlash |
-
-### Terminal Operations
-
-| Operation | Return | Description |
-|-----------|--------|-------------|
-| `forEach(Consumer)` | `void` | Har bir element uchun |
-| `toArray()` | `Object[]` | Array ga yig'ish |
-| `reduce(...)` | `Optional/T` | Reduction |
-| `collect(Collector)` | `R` | Yig'ish |
-| `min(Comparator)` | `Optional` | Minimal |
-| `max(Comparator)` | `Optional` | Maksimal |
-| `count()` | `long` | Elementlar soni |
-| `anyMatch(Predicate)` | `boolean` | Kamida bitta mos |
-| `allMatch(Predicate)` | `boolean` | Hammasi mos |
-| `noneMatch(Predicate)` | `boolean` | Hech biri mos emas |
-| `findFirst()` | `Optional` | Birinchi element |
-| `findAny()` | `Optional` | Ixtiyoriy element |
-
----
-
-## Tekshiruv Savollari
-
-### Stream API Asoslari
-
-1. **Stream nima va u qanday xususiyatlarga ega?**
-2. **Stream va Collection o'rtasidagi farq nima?**
-3. **Stream qanday yaratiladi? (5 xil usul)**
-4. **Intermediate va terminal operations farqi nima?**
-5. **Lazy evaluation nima va nima uchun muhim?**
-
-### Stream Operations
-
-6. **filter() va map() o'rtasidagi farq nima?**
-7. **flatMap() qachon ishlatiladi? Misol keltiring.**
-8. **limit() va skip() qanday ishlaydi?**
-9. **peek() va forEach() farqi nima?**
-10. **anyMatch(), allMatch(), noneMatch() farqlari?**
-
-### Terminal Operations
-
-11. **reduce() qanday ishlaydi? Identity nima?**
-12. **collect() va toList() farqi nima?**
-13. **findFirst() va findAny() farqi nima?**
-14. **Optional nima va nima uchun kerak?**
-
-### Parallel va Primitive Streams
-
-15. **Parallel stream qachon ishlatiladi?**
-16. **Primitive stream'lar (IntStream) nima uchun kerak?**
-17. **Cheksiz stream qanday yaratiladi?**
-18. **iterate() va generate() farqi nima?**
-
----
-
-## Amaliy topshiriq
-
-Berilgan `employees.json` fayli asosida quyidagi topshiriqlarni bajaring:
-
-1. **30 yoshdan katta barcha ayollarni toping**
-2. **Har bir mamlakatdagi employee'lar sonini hisoblang**
-3. **Eng yosh va eng keksa employee'larni toping**
-4. **Mamlakat bo'yicha o'rtacha yoshni hisoblang**
-5. **Gender bo'yicha employee'lar ro'yxatini guruhlang**
-6. **Ismi uzunligi 15 dan katta bo'lgan employee'larni toping**
-7. **Employee'larni yosh bo'yicha saralang**
-8. **Barcha employee'larning yoshlari yig'indisini hisoblang**
-9. **20-30 yosh oralig'idagi employee'lar soni**
-10. **Mamlakatlar bo'yicha eng ko'p uchraydigan yoshni toping**
+**Qachon ishlatmaslik kerak?**
+- Juda oddiy operatsiyalarda (for loop yetarli bo'lsa)
+- Exception handling kerak bo'lganda
+- Kodni murakkablashtirsa (ba'zida oddiy kod tushunarliroq)
 
 ---
 
 **Keyingi mavzu:** [Optional Class](./12_Optional_Class.md)  
 **[Mundarijaga qaytish](../README.md)**
 
-> O'rganishda davom etamiz! 🚀
+> Stream API - bu vosita, asosiy maqsad - kodingizni tushunarli qilish! 🚀
