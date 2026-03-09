@@ -995,7 +995,7 @@ int sum = reduce(squares, 0, Integer::sum);
 
 ---
 
-**Keyingi mavzu:** [Stream API](./09_Stream_API.md)  
+**Keyingi mavzu:** [Stream API](./08-stream-api.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

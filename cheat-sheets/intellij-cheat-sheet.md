@@ -191,7 +191,7 @@ Live Templates - bu tez kod yozish uchun qisqa yorliqlar .
 
 ---
 
-## 🔧 Qisqa Yo'llarni Sozlash
+##  Qisqa Yo'llarni Sozlash
 
 Agar biror qisqa yo'l ishlamasa yoki o'zgartirmoqchi bo'lsangiz:
 

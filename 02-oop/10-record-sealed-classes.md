@@ -1180,7 +1180,7 @@ public class VariableHiding {
 
 ---
 
-## Keyingi Mavzu: [Enum Classes va Design Patterns](./11_Enum_DesignPatterns.md)
+## Keyingi Mavzu: [Enum Classes va Design Patterns](./11-enum-design-patterns.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ **Eslatma:** Modifier'lar - Java'ning kuchli vositalari. Ularni to'g'ri ishlatish kodning sifati, xavfsizligi va samaradorligini oshiradi. "With great power comes great responsibility!"

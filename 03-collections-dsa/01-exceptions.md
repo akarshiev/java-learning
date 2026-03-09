@@ -261,5 +261,5 @@ try {
 
 ---
 
-**Keyingi mavzu:** [02 - Generics](./02_Generics.md)  
+**Keyingi mavzu:** [02 - Generics](./02-generics.md)  
 **[Mundarijaga qaytish](../README.md)**

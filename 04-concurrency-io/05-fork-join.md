@@ -804,7 +804,7 @@ public class ReflectionAttack {
 
 ---
 
-**Keyingi mavzu:** [Concurrent Utilities](./06%20-%20Date%20and%20Time%20API.md)  
+**Keyingi mavzu:** [Concurrent Utilities](./06-time-api.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

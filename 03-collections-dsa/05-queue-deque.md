@@ -667,9 +667,9 @@ public class QueuePerformanceComparison {
 
 ---
 
-**Keyingi mavzu:** [09_Dictionary_Data_Structure.md](./09_Dictionary_Data_Structure.md)
+**Keyingi mavzu:** [07 - Map Interface](./07-map-interface.md)
 
-**Oldingi mavzu:** [07_LinkedHashSet.md](./07_LinkedHashSet.md)
+**Oldingi mavzu:** [06 - Set Interface](./06-set-interface.md)
 
 **Asosiy sahifaga qaytish:** [README.md](../README.md)
 

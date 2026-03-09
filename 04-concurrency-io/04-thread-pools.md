@@ -863,7 +863,7 @@ public class ThreadPoolCompleteExample {
 
 ---
 
-**Keyingi mavzu:** [Fork-Join Framework](./05%20-%20Fork-Join%20Framework%20va%20Asinxron%20Dasturlash.md)  
+**Keyingi mavzu:** [Fork-Join Framework](./05-fork-join.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

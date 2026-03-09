@@ -905,7 +905,7 @@ class B extends A {
 
 ---
 
-## Keyingi Mavzu: [06 - Wrapper Classes, Big Numbers, Inner Classes](./06_Wrapper_BigNumbers_Inner.md)
+## Keyingi Mavzu: [06 - Wrapper Classes, Big Numbers, Inner Classes](./06-wrapper-bignumbers-inner.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ **Eslatma:** Abstraction - bu haqiqiy dasturchilik mahorati. Muvaffaqiyatli abstraction - bu muammoning murakkabligini yashirib, oddiy va foydalaniladigan interfeys yaratish. "Simple things should be simple, complex things should be possible" prinsipini eslang!

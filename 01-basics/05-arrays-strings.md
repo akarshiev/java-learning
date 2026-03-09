@@ -369,9 +369,9 @@ public class StringFormat {
 
 ---
 
-**🎉 Congrats!** Asosiy Java tushunchalari yakunlandi!
+** Congrats!** Asosiy Java tushunchalari yakunlandi!
 
-> 💡 **Eslatma:** Asosiy tushunchalarni yaxshi o'zlashtirish keyingi murakkab mavzularni o'rganish uchun mustahkam
+>  **Eslatma:** Asosiy tushunchalarni yaxshi o'zlashtirish keyingi murakkab mavzularni o'rganish uchun mustahkam
 > poydevor bo'ladi. Har bir misolni o'zingiz yozib ko'ring va tushunmagan joylaringizni qayta ko'rib chiqing!
 
 ---
@@ -380,13 +380,13 @@ public class StringFormat {
 
 ### 1. Intervyu Savollari
 
-O'z bilimingizni sinab ko'ring:  
-[Interviews/01_Basics_Interview.md](../Interviews/01_Basics_Interview.md)
+O'z bilimingizni sinab ko'ring:
+[01-basics-interview.md](../interviews/01-basics-interview.md)
 
 ### 2. Loyiha Topshiriqlari
 
-Amaliyot uchun:  
-[Assignments/01_Basics_assignment.md](../Assignments/01_Basics_assignment.md)
+Amaliyot uchun:
+[Assignments/01_Basics_assignment.md](../assignments/01-basics-assignment.md)
 
 ### 3. Mundarijaga Qaytish
 

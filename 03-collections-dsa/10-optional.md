@@ -23,3 +23,11 @@ Optional<String> nullable = Optional.ofNullable(null);
 | `map(Function)` | Qiymatni o'zgartirish |
 | `filter(Predicate)` | Qiymatni filtrlash |
 | `ifPresent(Consumer)` | Qiymat mavjud bo'lsa amal bajarish |
+
+---
+
+**Keyingi mavzu:** [Legacy Collections](./11-legacy-collections.md)
+**Oldingi mavzu:** [Collections Algoritmlari](./09-collections-algorithms.md)
+**[Mundarijaga qaytish](../README.md)**
+
+> O'rganishda davom etamiz! 🚀

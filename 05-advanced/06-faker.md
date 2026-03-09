@@ -922,7 +922,7 @@ generator.exportToSql(users, "users.sql");
 
 ---
 
-**Keyingi mavzu:** [Testing (JUnit)](./07_Testing_JUnit.md)  
+**Keyingi mavzu:** [Testing (JUnit)](./07-behavior-parameterization.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

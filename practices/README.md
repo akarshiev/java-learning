@@ -1,6 +1,6 @@
 # Java Amaliy Mashqlar To'plami
 
-## 📋 Mundarija
+##  Mundarija
 - [Basic Java Mashqlari](#basic-java-mashqlari)
 - [Pattern (Shakl) Mashqlari](#pattern-shakl-mashqlari)
 - [Array (Massiv) Mashqlari](#array-massiv-mashqlari)
@@ -16,7 +16,7 @@
 
 **Misol:** Konsolga "Hello World!" matnini chiqarish
 
-**Input:** `Hello World!`  
+**Input:** `Hello World!`
 **Output:** `Hello World!`
 
 **Berilgan:** "Hello World!" matnini ekranga chiqaring.
@@ -28,7 +28,7 @@
 
 **Misol:** Foydalanuvchi kiritgan ikkita sonni qo'shish
 
-**Input:** `2 3`  
+**Input:** `2 3`
 **Output:** `5`
 
 **Berilgan:** Ikkita butun son berilgan. Ularning yig'indisini toping.
@@ -40,7 +40,7 @@
 
 **Misol:** Ikkita o'zgaruvchining qiymatlarini almashtirish
 
-**Input:** `a=2, b=5`  
+**Input:** `a=2, b=5`
 **Output:** `a=5, b=2`
 
 **Berilgan:** a va b o'zgaruvchilarining qiymatlarini uchinchi o'zgaruvchi ishlatmasdan almashtiring.
@@ -52,7 +52,7 @@
 
 **Misol:** Butun sonni ikkilik sanoq sistemasiga o'tkazish
 
-**Input:** `9`  
+**Input:** `9`
 **Output:** `1001`
 
 **Berilgan:** Butun son berilgan. Uni ikkilik (binary) ko'rinishda chiqaring.
@@ -64,7 +64,7 @@
 
 **Misol:** n sonining faktorialini hisoblash (n! = 1 * 2 * 3 * ... * n)
 
-**Input:** `5`  
+**Input:** `5`
 **Output:** `120`
 
 **Berilgan:** n butun soni berilgan. n! faktorialni hisoblang.
@@ -76,7 +76,7 @@
 
 **Misol:** Ikki kompleks sonni qo'shish
 
-**Input:** `1+2i` va `4+5i`  
+**Input:** `1+2i` va `4+5i`
 **Output:** `5+7i`
 
 **Berilgan:** Ikkita kompleks son berilgan. Ularni qo'shing.
@@ -88,7 +88,7 @@
 
 **Misol:** Simple Interest (Oddiy foiz) hisoblash formulasi: SI = (P * R * T) / 100
 
-**Input:** `P = 10000, R = 5, T = 5`  
+**Input:** `P = 10000, R = 5, T = 5`
 **Output:** `2500`
 
 **Berilgan:** P (asosiy summa), R (foiz stavkasi), T (vaqt) berilgan. Oddiy foizni hisoblang.
@@ -100,10 +100,10 @@
 
 **Misol:** Fibonacci sonlaridagi juft indekslardagi sonlar yig'indisi
 
-Fibonacci: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...  
+Fibonacci: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
 Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
-**Input:** `n = 4` (4-chi indeksgacha, ya'ni 0,2,4,6,8)  
+**Input:** `n = 4` (4-chi indeksgacha, ya'ni 0,2,4,6,8)
 **Output:** `33`
 
 **Berilgan:** n butun soni berilgan. Fibonacci seriyasidagi juft indekslardagi sonlar yig'indisini toping.
@@ -119,7 +119,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Paskal uchburchagini chop etish
 
-**Input:** `N = 5`  
+**Input:** `N = 5`
 **Output:**
 ```
     1
@@ -138,7 +138,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Piramida shaklidagi raqam patterni
 
-**Input:** `3`  
+**Input:** `3`
 **Output:**
 ```
   1
@@ -155,7 +155,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Yulduzchalar bilan pattern
 
-**Input:** `5`  
+**Input:** `5`
 **Output:**
 ```
 *
@@ -179,7 +179,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Rombus (olmos) shaklidagi yulduzcha patterni
 
-**Input:** `N = 5`  
+**Input:** `N = 5`
 **Output:**
 ```
     *
@@ -202,7 +202,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Soat qumi (hourglass) patterni
 
-**Input:** `number = 7`  
+**Input:** `number = 7`
 **Output:**
 ```
 *******
@@ -227,7 +227,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Massivdagi barcha elementlar yig'indisini hisoblash
 
-**Input:** `[2, 4, 6, 7, 9]`  
+**Input:** `[2, 4, 6, 7, 9]`
 **Output:** `28`
 
 **Berilgan:** Butun sonlar massivi berilgan. Barcha elementlar yig'indisini toping.
@@ -239,7 +239,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Massivdagi eng katta elementni topish
 
-**Input:** `[7, 2, 5, 1, 4]`  
+**Input:** `[7, 2, 5, 1, 4]`
 **Output:** `7`
 
 **Berilgan:** Butun sonlar massivi berilgan. Eng katta elementni toping.
@@ -273,8 +273,8 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Massivni d pozitsiyaga aylantirish
 
-**Input:** `arr[] = {1, 2, 3, 4, 5, 6, 7}, d = 2`  
-**Output:** `[3, 4, 5, 6, 7, 1, 2]`  
+**Input:** `arr[] = {1, 2, 3, 4, 5, 6, 7}, d = 2`
+**Output:** `[3, 4, 5, 6, 7, 1, 2]`
 **Izoh:** d=2, ya'ni 2 ta element (1,2) massiv oxiriga aylantiriladi.
 
 **Berilgan:** Massiv va d butun soni berilgan. Massivni d pozitsiyaga chapga aylantiring.
@@ -286,7 +286,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Massivdagi takrorlanuvchi elementlarni olib tashlash
 
-**Input:** `[1, 2, 2, 3, 3, 3, 4, 5]`  
+**Input:** `[1, 2, 2, 3, 3, 3, 4, 5]`
 **Output:** `[1, 2, 3, 4, 5]`
 
 **Berilgan:** Butun sonlar massivi berilgan. Takrorlanuvchi elementlarni olib tashlab, yangi massiv yarating.
@@ -298,7 +298,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Berilgan elementning barcha uchrashlarini massivdan olib tashlash
 
-**Input:** `array = [1, 2, 1, 3, 5, 1], key = 1`  
+**Input:** `array = [1, 2, 1, 3, 5, 1], key = 1`
 **Output:** `[2, 3, 5]`
 
 **Berilgan:** Massiv va key elementi berilgan. Key elementining barcha uchrashlarini massivdan olib tashlang.
@@ -314,7 +314,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Berilgan satr palindrom ekanligini tekshirish (satrni teskari o'qiganda ham bir xil)
 
-**Input:** `"racecar"`  
+**Input:** `"racecar"`
 **Output:** `Yes`
 
 **Berilgan:** Satr berilgan. Uning palindrom ekanligini tekshiring.
@@ -326,7 +326,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Ikki satr anagramma ekanligini tekshirish (bir satrdagi harflar yordamida ikkinchi satrni yasash mumkin)
 
-**Input:** `str1 = "Silent", str2 = "Listen"`  
+**Input:** `str1 = "Silent", str2 = "Listen"`
 **Output:** `Strings are Anagram`
 
 **Berilgan:** Ikkita satr berilgan. Ularning anagramma ekanligini tekshiring.
@@ -338,7 +338,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Berilgan satrni teskari tartibda chiqarish
 
-**Input:** `str = "Geeks"`  
+**Input:** `str = "Geeks"`
 **Output:** `"skeeG"`
 
 **Berilgan:** Satr berilgan. Uni teskari tartibda chiqaring.
@@ -350,7 +350,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Son stringidagi boshidagi nollarni olib tashlash
 
-**Input:** `"00000123569"`  
+**Input:** `"00000123569"`
 **Output:** `"123569"`
 
 **Berilgan:** Raqamlardan tashkil topgan satr berilgan. Boshidagi nollarni olib tashlang.
@@ -366,7 +366,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Berilgan son tub son ekanligini tekshirish
 
-**Input:** `17`  
+**Input:** `17`
 **Output:** `true`
 
 **Berilgan:** n butun soni berilgan. Uning tub son ekanligini tekshiring.
@@ -378,7 +378,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Armstrong soni - bu raqamlarining kub(lar)i yig'indisiga teng bo'lgan son
 
-**Input:** `153`  
+**Input:** `153`
 **Output:** `true` (1³ + 5³ + 3³ = 153)
 
 **Berilgan:** n butun soni berilgan. Uning Armstrong soni ekanligini tekshiring.
@@ -390,7 +390,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Birinchi n ta Fibonacci sonini chiqarish
 
-**Input:** `n = 10`  
+**Input:** `n = 10`
 **Output:** `0 1 1 2 3 5 8 13 21 34`
 
 **Berilgan:** n butun soni berilgan. Birinchi n ta Fibonacci sonini chiqaring.
@@ -402,7 +402,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Massivni o'sish tartibida saralash
 
-**Input:** `[64, 34, 25, 12, 22, 11, 90]`  
+**Input:** `[64, 34, 25, 12, 22, 11, 90]`
 **Output:** `[11, 12, 22, 25, 34, 64, 90]`
 
 **Berilgan:** Butun sonlar massivi berilgan. Uni Bubble Sort algoritmi yordamida saralang.
@@ -414,7 +414,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Ikkita saralangan massivni birlashtirish
 
-**Input:** `[1, 3, 5]` va `[2, 4, 6]`  
+**Input:** `[1, 3, 5]` va `[2, 4, 6]`
 **Output:** `[1, 2, 3, 4, 5, 6]`
 
 **Berilgan:** Ikkita saralangan massiv berilgan. Ularni birlashtirib, saralangan holatda yangi massiv yarating.
@@ -426,7 +426,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Massivda eng ko'p takrorlangan elementni topish
 
-**Input:** `[1, 3, 2, 1, 4, 1, 3]`  
+**Input:** `[1, 3, 2, 1, 4, 1, 3]`
 **Output:** `1`
 
 **Berilgan:** Butun sonlar massivi berilgan. Eng ko'p takrorlangan elementni toping.
@@ -438,7 +438,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Satrdagi unli harflar sonini hisoblash (a, e, i, o, u)
 
-**Input:** `"Hello World"`  
+**Input:** `"Hello World"`
 **Output:** `3 (e, o, o)`
 
 **Berilgan:** Satr berilgan. Undagi unli harflar sonini hisoblang.
@@ -450,7 +450,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** Satrdagi so'zlar sonini hisoblash
 
-**Input:** `"Java is a programming language"`  
+**Input:** `"Java is a programming language"`
 **Output:** `5`
 
 **Berilgan:** Satr berilgan. Undagi so'zlar sonini hisoblang (so'zlar bo'shliq bilan ajratilgan).
@@ -462,7 +462,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 **Misol:** CamelCase formatidagi satrni snake_case formatiga o'tkazish
 
-**Input:** `"camelCaseString"`  
+**Input:** `"camelCaseString"`
 **Output:** `"camel_case_string"`
 
 **Berilgan:** CamelCase formatidagi satr berilgan. Uni snake_case formatiga o'tkazing.
@@ -471,7 +471,7 @@ Juft indekslar (0,2,4,6,8): 0 + 1 + 3 + 8 + 21 = 33
 
 ---
 
-## 📊 Mashqlar Statistikasi
+##  Mashqlar Statistikasi
 
 | Bo'lim | Mashqlar soni |
 |--------|---------------|

@@ -640,7 +640,7 @@ public class CacheExample {
 
 ---
 
-## Keyingi Qism: [Memory Management_3 - Heap Memory va Method Area](./09_Memory_Management_3.md)
+## Keyingi Qism: [Memory Management_3 - Heap Memory va Method Area](./09-memory-management-3.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ **Eslatma:** Xotira boshqaruvi - bu dasturchi sifatida sizning mas'uliyatingiz. Yaxshi xotira boshqaruvi amaliyotlari dasturingizning performansini va barqarorligini sezilarli darajada yaxshilaydi. "Memory is like money, you should know where it goes!"

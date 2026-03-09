@@ -743,7 +743,7 @@ System.out.println(json);
 
 ---
 
-**Keyingi mavzu:** [Reflections API](./15_Reflections_API.md)  
+**Keyingi mavzu:** [Reflections API](./12-reflection-api.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

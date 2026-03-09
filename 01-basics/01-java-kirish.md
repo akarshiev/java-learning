@@ -101,7 +101,7 @@ javac HelloWorld.java
 java HelloWorld
 ```
 
-## Argumentlar bilan Ishlasih
+## Argumentlar bilan Ishlash
 
 ```java
 public class HelloWorld {
@@ -167,7 +167,7 @@ public class Example {  // 'public', 'class' - keywords; 'Example' - identifier
 5. **Java kompilyatsiyasi**: `.java` → `.class` (bytecode)
 6. **Argumentlar** - dasturga ish vaqtida beriladigan qiymatlar
 
-**Keyingi mavzu**: [Java Sintaksisi va Dastur Tuzilishi](./02_Syntax_Types.md)
+**Keyingi mavzu:** [Java Sintaksisi va Dastur Tuzilishi](./02-syntax-types.md)
 **[Mundarija qaytish](../README.md)**
 
 > ⚡️ O'rganishda davom etamiz.

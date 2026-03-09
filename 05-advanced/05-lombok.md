@@ -992,7 +992,7 @@ Lombok - Java dasturchilarining vaqtini tejaydigan, kodni soddalashtiradigan kuc
 
 ---
 
-**Keyingi mavzu:** [Testing (JUnit)](./07_Testing_JUnit.md)  
+**Keyingi mavzu:** [Testing (JUnit)](./06-faker.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

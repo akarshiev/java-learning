@@ -703,7 +703,7 @@ public final class Color {
 
 ---
 
-**Keyingi mavzu:** [Locks and Synchronization](./04%20-%20Tasks%20and%20Thread%20Pools.md)  
+**Keyingi mavzu:** [Locks and Synchronization](./04-thread-pools.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

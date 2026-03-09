@@ -37,3 +37,10 @@ try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("person.s
 ```java
 private transient String password; // serializatsiya qilinmaydi
 ```
+
+---
+
+**Keyingi mavzu:** [Regular Expressions](./10-regular-expressions.md)
+**[Mundarijaga qaytish](../README.md)**
+
+> O'rganishda davom etamiz! 🚀

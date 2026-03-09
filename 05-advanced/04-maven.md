@@ -918,7 +918,7 @@ java -jar target/my-app-1.0-SNAPSHOT.jar
 
 ---
 
-**Keyingi mavzu:** [Gradle Build Tool](./06_Gradle.md)  
+**Keyingi mavzu:** [Gradle Build Tool](./05-lombok.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀
