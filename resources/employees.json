@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Ali Karimov",
+    "department": "Backend",
+    "salary": 3000
+  },
+  {
+    "id": 2,
+    "name": "Sarvar Toshmatov",
+    "department": "Frontend",
+    "salary": 2500
+  },
+  {
+    "id": 3,
+    "name": "Malika Yusupova",
+    "department": "DevOps",
+    "salary": 3500
+  }
+]

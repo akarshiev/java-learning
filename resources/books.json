@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Effective Java",
+    "author": "Joshua Bloch",
+    "year": 2018
+  },
+  {
+    "id": 2,
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "year": 2008
+  },
+  {
+    "id": 3,
+    "title": "Head First Java",
+    "author": "Kathy Sierra",
+    "year": 2005
+  }
+]
