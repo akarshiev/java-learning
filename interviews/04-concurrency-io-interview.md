@@ -373,6 +373,6 @@
 ---
 
 **Keyingi modul:** [5-Modul Intervyu Savollari](05-advanced-interview.md)  
-**[Mundarijaga qaytish](../../README.md)**
+**[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

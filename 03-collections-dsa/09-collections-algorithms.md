@@ -1410,9 +1410,9 @@ public class Main {
 
 ---
 
-**Keyingi mavzu:** [13_Legacy_Collections.md](./13_Legacy_Collections.md)
+**Keyingi mavzu:** [11 - Legacy Collections](./11-legacy-collections.md)
 
-**Oldingi mavzu:** [11_Iterator_ListIterator.md](./11_Iterator_ListIterator.md)
+**Oldingi mavzu:** [08 - Iterator va Comparator](./08-iterator-comparator.md)
 
 **Asosiy sahifaga qaytish:** [README.md](../README.md)
 

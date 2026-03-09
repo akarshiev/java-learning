@@ -908,7 +908,7 @@ MyFramework.runTests(CalculatorTest.class);
 
 ---
 
-**Keyingi mavzu:** [Telegram Bot](./16_Telegram_Bot.md)  
+**Keyingi mavzu:** [Telegram Bot](./13-telegram-bot.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > Reflection - kuchli vosita, lekin ehtiyotkorlik bilan ishlatish kerak! 🚀

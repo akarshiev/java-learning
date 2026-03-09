@@ -393,7 +393,7 @@ public class PrecedenceExample {
     - Qiymat tayinlash `=`
 ---
 
-**Keyingi mavzu**: [Control Flow](./03_Control_Flow.md)
+**Keyingi mavzu**: [Control Flow](./03-control-flow.md)
 
 **[Mundarijaga qaytish](../README.md)**
 

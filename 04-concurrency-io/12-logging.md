@@ -1089,7 +1089,7 @@ public class LoggingFrameworkExample {
 
 ---
 
-**Bu bilan 4-modul yakunlandi!** 🎉
+**Bu bilan 4-modul yakunlandi!**
 
 **[Mundarijaga qaytish](../README.md)**
 

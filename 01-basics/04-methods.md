@@ -461,7 +461,7 @@ public class KalkulyatorMetodlari {
 
 ---
 
-**Keyingi mavzu**: [05 - Massivlar va Satrlar (Arrays & Strings)](./05_Arrays_Strings.md)  
+**Keyingi mavzu**: [05 - Massivlar va Satrlar (Arrays & Strings)](./05-arrays-strings.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ O'rganishda davom etamiz!

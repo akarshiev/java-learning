@@ -409,7 +409,7 @@ public class TypeInferenceExample {
 
 ---
 
-**Keyingi mavzu:** [Collections Framework: List Interface](./03_Collections_Framework_List_Interface_1.md)  
+**Keyingi mavzu:** [03 - Collections Framework](./03-collections-framework.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 ---

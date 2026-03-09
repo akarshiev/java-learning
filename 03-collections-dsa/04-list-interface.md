@@ -409,7 +409,7 @@ sublist.clear(); // Original list'dan ham o'chadi
 
 ---
 
-**Keyingi mavzu:** [05 - LinkedList Data Structure](./05_LinkedList_Data_Structure.md)  
+**Keyingi mavzu:** [05 - Queue va Deque](./05-queue-deque.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 ---
@@ -1123,9 +1123,9 @@ public class VectorExample {
 
 ---
 
-**Keyingi mavzu:** [06_Set_Interface.md](./06_Set_Interface.md)
+**Keyingi mavzu:** [06 - Set Interface](./06-set-interface.md)
 
-**Oldingi mavzu:** [04_Collections_Framework_List_Interface_2.md](./04_Collections_Framework_List_Interface_2.md)
+**Oldingi mavzu:** [03 - Collections Framework](./03-collections-framework.md)
 
 **Asosiy sahifaga qaytish:** [README.md](../README.md)
 

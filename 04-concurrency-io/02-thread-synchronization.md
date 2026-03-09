@@ -694,7 +694,7 @@ class LivelockExample {
 
 ---
 
-**Keyingi mavzu:** [03 - Thread Pools and Executors](./03-Concurrency.md)  
+**Keyingi mavzu:** [03 - Thread Pools and Executors](./03-concurrency-utilities.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

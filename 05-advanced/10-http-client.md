@@ -831,7 +831,7 @@ Quyidagi imkoniyatlarga ega HTTP Client dasturini yozing:
 
 ---
 
-**Keyingi mavzu:** [Microservices Overview](./14_Microservices.md)  
+**Keyingi mavzu:** [Microservices Overview](./11-gson.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

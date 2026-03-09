@@ -993,7 +993,7 @@ public class TestClass {
 
 ---
 
-**5-modul yakunlandi!** 🎉
+**5-modul yakunlandi!**
 
 **[Mundarijaga qaytish](../README.md)**
 

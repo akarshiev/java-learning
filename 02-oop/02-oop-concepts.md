@@ -561,10 +561,10 @@ org.google.search.engine
 3. **Package** - Kodni tashkil etish va nomlar to'qnashuvini oldini olish
 4. **Access Modifiers** - Kirish nazorati (public, protected, default, private)
 
-> 💡 **Eslatma:** Encapsulation nafaqat "private field + getter/setter". Bu ma'lumot va uning ustidagi ope ratsiyalarni bitta birlikda saqlash falsafasidir. Yaxshi dasturchi yaxshi architect. Encapsulation va packaging sizning dasturingiz architecture'sini belgilaydi!
+>  **Eslatma:** Encapsulation nafaqat "private field + getter/setter". Bu ma'lumot va uning ustidagi ope ratsiyalarni bitta birlikda saqlash falsafasidir. Yaxshi dasturchi yaxshi architect. Encapsulation va packaging sizning dasturingiz architecture'sini belgilaydi!
 ---
 
-**Keyingi mavzu**: [03 - Inheritance (Meros olish)](./03_Inheritance.md)  
+**Keyingi mavzu**: [03 - Inheritance (Meros olish)](./03-inheritance.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ O'rganishda davom etamiz.

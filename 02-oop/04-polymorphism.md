@@ -797,7 +797,7 @@ class Child extends Parent {
 
 ---
 
-## Keyingi Mavzu: [05 - Abstraction va Interface (Abstraksiya va Interfeys)](./05_Abstraction_Interface.md)
+## Keyingi Mavzu: [05 - Abstraction va Interface (Abstraksiya va Interfeys)](./05-abstraction-interface.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ **Eslatma:** Polymorphism - bu OOP ning eng kuchli xususiyatlaridan biri. Bu sizga moslashuvchan va kengaytirilishi oson dasturlar yaratish imkonini beradi. "Program to an interface, not an implementation" prinsipini eslang!

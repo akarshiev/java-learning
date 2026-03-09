@@ -995,7 +995,7 @@ class OrderSystem {
 
 ---
 
-## 🎉 Congrats! Java OOP qismi yakunlandi!
+##  Congrats! Java OOP qismi yakunlandi!
 
 ### Eslatma:
 Asosiy tushunchalarni yaxshi o'zlashtirish keyingi murakkab mavzularni o'rganish uchun mustahkam poydevor bo'ladi. Har bir misolni o'zingiz yozib ko'ring va tushunmagan joylaringizni qayta ko'rib chiqing!
@@ -1003,12 +1003,12 @@ Asosiy tushunchalarni yaxshi o'zlashtirish keyingi murakkab mavzularni o'rganish
 ## KEYINGI QADAMLAR
 
 ### 1. Intervyu Savollari
-O'z bilimingizni sinab ko'ring:  
-[Interviews/02_OOP_interviews.md](../Interviews/02_OOP_interviews.md)
+O'z bilimingizni sinab ko'ring:
+[02-oop-interview.md](../interviews/02-oop-interview.md)
 
 ### 2. Loyiha Topshiriqlari
-Amaliyot uchun:  
-[Assignments/02_OOP_assignment.md](../Assignments/02_OOP_assignment.md)
+Amaliyot uchun:
+[02-oop-assignment.md](../assignments/02-oop-assignment.md)
 
 ### 3. Mundarijaga Qaytish
 [Asosiy README.md](../README.md)

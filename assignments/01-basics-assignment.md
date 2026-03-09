@@ -65,11 +65,11 @@ Tanlang:
 
 **Namuna valyutalar:**
 
-- UZS (O'zbek so'mi) 🇺🇿
-- USD (AQSH dollari) 🇺🇸
-- EUR (Yevro) 🇪🇺
-- RUB (Rus rubli) 🇷🇺
-- CNY (Xitay yuani) 🇨🇳
+- UZS (O'zbek so'mi)
+- USD (AQSH dollari)
+- EUR (Yevro)
+- RUB (Rus rubli)
+- CNY (Xitay yuani)
 
 **Namuna interfeys:**
 

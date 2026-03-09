@@ -23,3 +23,10 @@ Java NIO (New I/O) - Java 1.4 da kiritilgan, an'anaviy IO ga alternativ bo'lgan 
 - `ServerSocketChannel` - TCP server
 - `DatagramChannel` - UDP ulanishlari
 - `ByteBuffer` - Bayt buferi
+
+---
+
+**Keyingi mavzu:** [Serializatsiya](./09-serialization.md)
+**[Mundarijaga qaytish](../README.md)**
+
+> O'rganishda davom etamiz! 🚀

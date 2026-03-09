@@ -1819,9 +1819,9 @@ class LocalizationService {
 
 ---
 
-**Intervyu Savollari:** [Interviews/03_Collections_and_DSA.md](./Interviews/03_Collections_and_DSA.md)
+**Intervyu Savollari:** [Interviews/03_Collections_and_DSA.md](../interviews/03-collections-dsa-interview.md)
 
-**Loyiha Topshiriqlari:** [assignments/03_Collections_and_DSA.md](./assignments/03_Collections_and_DSA.md)
+**Loyiha Topshiriqlari:** [assignments/03_Collections_and_DSA.md](../assignments/03-collections-assignment.md)
 
 **Mundarijaga Qaytish:** [README.md](../README.md)
 
@@ -1838,6 +1838,6 @@ class LocalizationService {
 - **ResourceBundle** - Tilga bog'liq resurslar
 - **MessageFormat** - Parametrli xabarlar formatlash
 
-> **Tebriklar! Siz Collections and DSA bo'limini muvaffaqiyatli yakunladingiz!** 🎉
+> **Tebriklar! Siz Collections and DSA bo'limini muvaffaqiyatli yakunladingiz!**
 
 > **Bolalar, o'rganishda davom etamiz!** 🚀

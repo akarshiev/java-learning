@@ -857,13 +857,13 @@ Quyidagi imkoniyatlarga ega Telegram bot yarating:
 ```bash
 # Botni test qilish
 1. @BotFather dan token olish
-2. Yukoridagi kodni token bilan ishga tushirish
+2. Yuqoridagi kodni token bilan ishga tushirish
 3. Telegram'da botga yozish va funksiyalarni tekshirish
 ```
 
 ---
 
-**Keyingi mavzu:** [Annotations](./17_Annotations.md)  
+**Keyingi mavzu:** [Annotations](./14-annotations.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > Telegram bot yaratish - qiziqarli va foydali tajriba! 🚀

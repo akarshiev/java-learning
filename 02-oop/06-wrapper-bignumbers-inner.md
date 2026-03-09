@@ -719,7 +719,7 @@ System.out.println(x == y);  // Nima chiqadi?
 
 ---
 
-## Keyingi Mavzu: [07 - Memory Management (Xotira Boshqaruvi)](07_Memory_Management_1.md)
+## Keyingi Mavzu: [07 - Memory Management (Xotira Boshqaruvi)](./07-memory-management-1.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ **Eslatma:** Wrapper classes primitive va object o'rtasidagi bo'shliqni to'ldiradi. Big numbers murakkab matematik hisob-kitoblar uchun, inner classes esa kodni yaxshi tashkil qilish uchun. Har bir vosita o'z o'rnida muhim!

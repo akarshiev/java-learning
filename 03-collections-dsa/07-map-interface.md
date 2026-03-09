@@ -1031,7 +1031,7 @@ public class WeakHashMapClassTest {
 
 **Keyingi mavzu:** [10_Views, Shallow Coppy and Deep Copy.md](10_Views_Copies.md)
 
-**Oldingi mavzu:** [08_Queue_Data_Structure.md](./08_Queue_Data_Structure.md)
+**Oldingi mavzu:** [05 - Queue va Deque](./05-queue-deque.md)
 
 **Asosiy sahifaga qaytish:** [README.md](../README.md)
 

@@ -505,11 +505,7 @@ public class SetMethodsExample {
 
 ---
 
-**Keyingi mavzu:** [07_LinkedHashSet.md](./07_LinkedHashSet.md)
-
-**Oldingi mavzu:** [05_LinkedList_Data_Structure.md](./05_LinkedList_Data_Structure.md)
-
-**Asosiy sahifaga qaytish:** [README.md](../README.md)
+**[Mundarijaga qaytish](../README.md)**
 
 ---
 
@@ -1063,9 +1059,9 @@ public class TreeSetNavigation {
 
 ---
 
-**Keyingi mavzu:** [08_Queue_Data_Structure.md](./08_Queue_Data_Structure.md)
+**Keyingi mavzu:** [07 - Map Interface](./07-map-interface.md)
 
-**Oldingi mavzu:** [06_Set_Interface.md](./06_Set_Interface.md)
+**Oldingi mavzu:** [05 - Queue va Deque](./05-queue-deque.md)
 
 **Asosiy sahifaga qaytish:** [README.md](../README.md)
 

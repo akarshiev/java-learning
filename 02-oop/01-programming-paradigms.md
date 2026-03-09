@@ -234,7 +234,7 @@ Java asosan **OOP** tilidir, lekin:
 
 ---
 
-**Keyingi mavzu**: [02 - OOP Asosiy Tushunchalari: Encapsulation, Packaging](./02_OOP_Concepts.md)  
+**Keyingi mavzu**: [02 - OOP Asosiy Tushunchalari: Encapsulation, Packaging](./02-oop-concepts.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡ O'rganishda davom etamiz.

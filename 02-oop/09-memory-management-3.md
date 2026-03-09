@@ -658,7 +658,7 @@ public class MemoryMonitoringSystem {
 
 ---
 
-## Keyingi Mavzu: [Record and Sealed Classes, Static and Instance Block Initializer](./10_Record_Sealed_Classes.md)
+## Keyingi Mavzu: [Record and Sealed Classes, Static and Instance Block Initializer](./10-record-sealed-classes.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ **Eslatma:** Xotira boshqaruvi - bu san'at va fan. Tushunish va to'g'ri sozlash dasturingizning performansini o'zgartiradi. "The bitterness of poor performance remains long after the sweetness of low memory consumption is forgotten!"

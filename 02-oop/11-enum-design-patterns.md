@@ -1054,7 +1054,7 @@ jshell> /exit
 
 ---
 
-## Keyingi Mavzu: [Objects Class, Javadoc & UUID](./12_Objects_Javadoc_UUID.md)
+## Keyingi Mavzu: [Objects Class, Javadoc & UUID](./12-objects-javadoc-uuid.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ **Eslatma:** Dizayn pattern'lar - tajribali dasturchilarning yechimlari. Ularni o'rganish va to'g'ri ishlatish sizning dasturchi sifatida rivojlanishingizga yordam beradi. "Don't reinvent the wheel - use patterns!"

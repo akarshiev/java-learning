@@ -333,7 +333,7 @@ tashqi: for (int i = 1; i <= 3; i++) {
 ```
 ---
 
-**Keyingi mavzu**: [Methods](./04_Methods.md)
+**Keyingi mavzu**: [Methods](./04-methods.md)
 
 **[Mundarijaga qaytish](../README.md)**
 

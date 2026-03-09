@@ -730,7 +730,7 @@ Map<String, Optional<Employee>> youngestByCountry = employees.stream()
 
 ---
 
-**Keyingi mavzu:** [Optional Class](./12_Optional_Class.md)  
+**Keyingi mavzu:** [Optional Class](./09-comparator-collectors.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > Stream API - bu vosita, asosiy maqsad - kodingizni tushunarli qilish! 🚀

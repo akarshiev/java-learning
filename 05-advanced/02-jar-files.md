@@ -691,7 +691,7 @@ java -cp app.jar MainClass                    # Run with classpath
 
 ---
 
-**Keyingi mavzu:** [Web Servisler](./06_Web_Services.md)  
+**Keyingi mavzu:** [Web Servisler](./03-base64.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

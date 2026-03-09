@@ -794,7 +794,7 @@ Quyidagi imkoniyatlarga ega email yuborish tizimini yozing:
 
 ---
 
-**Keyingi mavzu:** [Web Servisler](./06_Web_Services.md)  
+**Keyingi mavzu:** [Web Servisler](./02-jar-files.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

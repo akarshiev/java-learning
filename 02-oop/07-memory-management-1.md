@@ -502,7 +502,7 @@ public class Test {
 
 ---
 
-## Keyingi Qism: [Memory Management_2 - Heap, Garbage Collection](./08_Memory_Management_2.md)
+## Keyingi Qism: [Memory Management_2 - Heap, Garbage Collection](./08-memory-management-2.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ **Eslatma:** Xotira boshqaruvi - bu dasturchining eng muhim vazifalaridan biri. Yaxshi xotira boshqaruvi dasturning tezligi, barqarorligi va ishonchliligini ta'minlaydi. "Premature optimization is the root of all evil" - Deyl Karnegi, lekin xotira haqida har doim o'ylashingiz kerak!

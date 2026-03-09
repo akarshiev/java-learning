@@ -841,11 +841,7 @@ public class CopyConstructor {
 
 ---
 
-**Keyingi mavzu:** [11_Iterator_ListIterator.md](./11_Iterator_ListIterator.md)
-
-**Oldingi mavzu:** [09_Dictionary_Data_Structure.md](./09_Dictionary_Data_Structure.md)
-
-**Asosiy sahifaga qaytish:** [README.md](../README.md)
+**[Mundarijaga qaytish](../README.md)**
 
 ---
 
@@ -1621,9 +1617,9 @@ public class FailSafeIterator {
 
 ---
 
-**Keyingi mavzu:** [12_Collections_Algorithms_Optional_SOLID.md](./12_Collections_Algorithms_Optional_SOLID.md)
+**Keyingi mavzu:** [09 - Collections Algoritmlari](./09-collections-algorithms.md)
 
-**Oldingi mavzu:** [10_Views_Copies.md](./10_Views_Copies.md)
+**Oldingi mavzu:** [07 - Map Interface](./07-map-interface.md)
 
 **Asosiy sahifaga qaytish:** [README.md](../README.md)
 

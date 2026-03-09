@@ -1011,7 +1011,7 @@ Berilgan `Employee` ob'ektlari ro'yxati ustida quyidagi operatsiyalarni bajaring
 
 ---
 
-**Keyingi mavzu:** [HTTP Client](./13_HTTP_Client.md)  
+**Keyingi mavzu:** [HTTP Client](./10-http-client.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

@@ -432,7 +432,7 @@ standard.add("Standard implementation");
 
 ---
 
-**Keyingi qism:** [04 - List Interface](./04_Collections_Framework_List_Interface_2.md)  
+**Keyingi mavzu:** [04 - List Interface](./04-list-interface.md)  
 **[Mundarijaga qaytish](../README.md)**
 
 ---

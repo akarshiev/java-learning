@@ -225,6 +225,6 @@
 
 ---
 
-**[Mundarijaga qaytish](../../README.md)**
+**[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

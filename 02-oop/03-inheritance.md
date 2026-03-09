@@ -776,7 +776,7 @@ class Child extends Parent {
 
 ---
 
-## Keyingi Mavzu: [04 - Polymorphism (Ko'p shakllilik)](./04_Polymorphism.md)
+## Keyingi Mavzu: [04 - Polymorphism (Ko'p shakllilik)](./04-polymorphism.md)
 **[Mundarijaga qaytish](../README.md)**
 
 > ⚡️ **Eslatma:** Inheritance - bu kuchli vosita, lekin uni haddan tashqari ishlatmaslik kerak. "Favor composition over inheritance" - Inheritance ustidan Composition'ni afzal ko'ring.

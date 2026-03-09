@@ -511,6 +511,6 @@
 ---
 
 **Keyingi modul:** [4-Modul Intervyu Savollari](04-concurrency-io-interview.md)  
-**[Mundarijaga qaytish](../../README.md)**
+**[Mundarijaga qaytish](../README.md)**
 
 > O'rganishda davom etamiz! 🚀

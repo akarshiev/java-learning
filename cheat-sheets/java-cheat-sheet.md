@@ -17,44 +17,44 @@
 ## 1. Java Terminologiyasi
 
 <details>
-<summary>📌 **JVM (Java Virtual Machine)**</summary>
+<summary> **JVM (Java Virtual Machine)**</summary>
 
-**Nima?** Java bytecode'ni bajaruvchi virtual mashina.  
+**Nima?** Java bytecode'ni bajaruvchi virtual mashina.
 **Vazifasi:** Compiler tomonidan generatsiya qilingan bytecode'ni interpretatsiya qiladi va operatsion tizimga mos keladigan kodga o'tkazadi.
 </details>
 
 <details>
-<summary>📌 **Bytecode**</summary>
+<summary> **Bytecode**</summary>
 
-**Nima?** JDK dagi javac compiler tomonidan Java source code'dan generatsiya qilinadigan oraliq kod.  
+**Nima?** JDK dagi javac compiler tomonidan Java source code'dan generatsiya qilinadigan oraliq kod.
 **Vazifasi:** JVM tomonidan tushuniladigan va bajariladigan format.
 </details>
 
 <details>
-<summary>📌 **JDK (Java Development Kit)**</summary>
+<summary> **JDK (Java Development Kit)**</summary>
 
-**Nima?** To'liq Java rivojlantirish to'plami.  
+**Nima?** To'liq Java rivojlantirish to'plami.
 **Tarkibi:** Compiler (javac), JRE, debugger, dokumentatsiya vositalari va boshqalar.
 </details>
 
 <details>
-<summary>📌 **JRE (Java Runtime Environment)**</summary>
+<summary> **JRE (Java Runtime Environment)**</summary>
 
-**Nima?** Java dasturlarini ishga tushirish muhiti.  
+**Nima?** Java dasturlarini ishga tushirish muhiti.
 **Vazifasi:** Java dasturlarini bajarish imkonini beradi (lekin kompilyatsiya qila olmaydi).
 </details>
 
 <details>
-<summary>📌 **Garbage Collector**</summary>
+<summary> **Garbage Collector**</summary>
 
-**Nima?** JVM tarkibidagi xotirani boshqarish dasturi.  
+**Nima?** JVM tarkibidagi xotirani boshqarish dasturi.
 **Vazifasi:** Foydalanilmayotgan object'lar egallagan xotirani avtomatik tozalash.
 </details>
 
 <details>
-<summary>📌 **finalize() metodi**</summary>
+<summary> **finalize() metodi**</summary>
 
-**Nima?** Garbage Collector tomonidan object yo'q qilinishidan oldin chaqiriladigan metod.  
+**Nima?** Garbage Collector tomonidan object yo'q qilinishidan oldin chaqiriladigan metod.
 **Vazifasi:** Object bilan bog'liq resurslarni tozalash imkoniyati.
 </details>
 
@@ -287,7 +287,7 @@ public class Example {
 - Kalit so'zlar ishlatilmaydi (`int`, `while` va h.k.)
 - Maxsus belgilar (`@`, `#`) ishlatilmaydi
 
-✅ **To'g'ri:** `myVar`, `_temp`, `$value`, `counter1`  
+✅ **To'g'ri:** `myVar`, `_temp`, `$value`, `counter1`
 ❌ **Noto'g'ri:** `1var`, `my-var`, `class`, `my@var`
 
 ---
@@ -798,15 +798,15 @@ Map (interface)
 
 ## Java nima uchun ishlatiladi?
 
-✅ **Mobile Applications** - Android ilovalar  
-✅ **Desktop GUI Applications** - Swing, JavaFX  
-✅ **Artificial Intelligence** - AI/ML ilovalar  
-✅ **Scientific Applications** - Ilmiy hisoblashlar  
-✅ **Cloud Applications** - Bulutli xizmatlar  
-✅ **Embedded Systems** - Qurilmalar  
-✅ **Gaming Applications** - O'yinlar  
-✅ **Web Applications** - Spring, Jakarta EE  
-✅ **Big Data** - Hadoop, Spark  
+✅ **Mobile Applications** - Android ilovalar
+✅ **Desktop GUI Applications** - Swing, JavaFX
+✅ **Artificial Intelligence** - AI/ML ilovalar
+✅ **Scientific Applications** - Ilmiy hisoblashlar
+✅ **Cloud Applications** - Bulutli xizmatlar
+✅ **Embedded Systems** - Qurilmalar
+✅ **Gaming Applications** - O'yinlar
+✅ **Web Applications** - Spring, Jakarta EE
+✅ **Big Data** - Hadoop, Spark
 ✅ **Enterprise Applications** - Korporativ tizimlar
 
 ---
