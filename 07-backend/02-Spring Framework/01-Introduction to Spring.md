@@ -1,639 +1,261 @@
-# 2-Modul: Spring Framework Introduction
+## 01 - Spring Framework Introduction
 
-## Spring Framework nima?
+### 0. Short Summary (TL;DR)
 
-**Spring Framework** - Java dasturlash tilida korporativ ilovalar yaratishni soddalashtiruvchi ochiq kodli, yengil va modulli framework.
+- Spring Framework - Jakarta EE (Java EE) ga alternativ sifatida yaratilgan yengil va modulli framework
+- Inversion of Control (IoC) va Dependency Injection (DI) orqali object lar orasidagi bog‘liqlikni boshqaradi
+- 3 xil wiring (bog‘lash) usuli: XML, Java Config, va Auto-wiring (component scan + @Autowired)
+- ApplicationContext - BeanFactory ning to‘liq versiyasi, real proyektlarda ApplicationContext ishlatiladi
+- Spring 2003 yilda Rod Johnson tomonidan yaratilgan va hozirda Java enterprise dasturlashning standarti
 
+### 1. Concept Explanation (ELI5)
+
+**Muammo:**
+Oddiy Java dasturida bir object (masalan, UserService) boshqa object ga (masalan, UserRepository) bog‘liq bo‘lsa, siz uni qo‘lda yaratishingiz kerak:
 ```java
-// Spring'siz (Java EE) - murakkab va ko'p kod
-public class UserService {
-    private UserDAO userDAO;
-    
-    public UserService() {
-        this.userDAO = new UserDAO();  // Qattiq bog'liqlik
-    }
-}
-
-// Spring bilan - DI orqali
-@Component
-public class UserService {
-    @Autowired
-    private UserDAO userDAO;  // Spring boshqaradi
-}
+UserRepository repo = new UserRepository();
+UserService service = new UserService(repo);
 ```
+Agar loyiha katta bo‘lsa, bu bog‘liqliklarni boshqarish juda murakkablashadi. Har bir class o‘ziga kerakli object larni qayerdan olishni bilishi kerak bo‘ladi.
 
-### Spring nima uchun kerak?
+**Yechim (IoC/DI):**
+Spring sizga shunday deydi: "Sen faqat menga qanday object lar kerakligini ayt. Qayerdan kelishini, qachon yaratilishini va qanday ishlashini men hal qilaman".
 
-1. **Kodni soddalashtirish** - Murakkab korporativ ilovalarni oddiy qilish
-2. **Modullik** - Kerakli modullarni tanlab olish imkoniyati
-3. **Yengillik** - Resurslarni kam iste'mol qilish
-4. **Moslashuvchanlik** - Turli texnologiyalar bilan integratsiya
-5. **Katta jamoatchilik** - Ko'plab dokumentatsiya va yordam
+**Real-life analogy:**
+Restoranda ovqat buyurtma qilish. Siz (client) qo‘lingizda un, go‘sht, sabzavot bilan oshxonaga kirmaysiz. Siz faqat "men lag'mon istayman" deysiz. Oshpaz (Spring container) sizga tayyor ovqatni olib keladi. Qanday tayyorlangani, ingredientlar qayerdan kelgani sizni qiziqtirmaydi.
 
----
+### 2. Java Mechanics & Deep Dive
 
-## 2.1 - Java EE ning kamchiliklari
+**Inversion of Control (IoC) Container:**
 
-### Java EE (Jakarta EE) muammolari
-
-| Muammo | Tavsif |
-|--------|--------|
-| **Murakkablik** | O'rganish qiyin, tik egri chiziq |
-| **Ogirlik** | Ko'p resurs talab qiladi, kichik ilovalar uchun mos emas |
-| **Moslashuvchanlik yo'q** | Qattiq arxitektura, sozlash va kengaytirish qiyin |
-| **Cheklangan jamoatchilik** | Spring ga nisbatan kichik va kam faol hamjamiyat |
-| **Cheklangan vositalar** | Tooling va ekotizim kam rivojlangan |
-
-```java
-// Java EE usulida - EJB bilan
-@Stateless
-public class UserServiceBean implements UserService {
-    @PersistenceContext
-    private EntityManager em;  // Qattiq bog'langan
-    
-    public User findUser(Long id) {
-        return em.find(User.class, id);
-    }
-}
-// Ko'p konfiguratsiya, murakkab test qilish
-```
-
----
-
-## 2.2 - Spring afzalliklari
-
-| Xususiyat | Tavsif |
-|-----------|--------|
-| **Yengil va modulli** | Boshqa frameworklar bilan oson integratsiya |
-| **Dependency Injection (DI)** | Bog'liqliklarni boshqarishning kuchli mexanizmi |
-| **Keng dokumentatsiya** | Katta va faol jamoatchilik, ko'plab resurslar |
-| **Oson o'rganish** | Yangi dasturchilar uchun qulay |
-| **Moslashuvchan arxitektura** | Ilova talablariga mos sozlash imkoniyati |
-
-```java
-// Spring usulida
-@Component
-public class UserService {
-    private final UserRepository userRepository;
-    
-    // Konstruktor orqali DI
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-    
-    public User findUser(Long id) {
-        return userRepository.findById(id);
-    }
-}
-// Sodda, test qilish oson, moslashuvchan
-```
-
-### Spring tarixi
-
-- **2003** - Rod Johnson tomonidan yaratilgan
-- **Asosiy maqsad** - Java dasturlashni soddalashtirish
-- **Ochiq kod** - Apache 2.0 litsenziyasi
-
----
-
-## 2.3 - Spring modullari
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Spring Framework                          │
-├─────────────┬─────────────┬─────────────┬───────────────────┤
-│ Spring Core │ Spring AOP  │ Spring JDBC │ Spring ORM        │
-│ (IoC/DI)    │ (Aspect)    │ (Data)      │ (Hibernate, JPA)  │
-├─────────────┼─────────────┼─────────────┼───────────────────┤
-│ Spring MVC  │ Spring Web  │ Spring Test │ Spring Security   │
-│ (Web)       │ (WebSocket) │ (Testing)   │ (Security)        │
-└─────────────┴─────────────┴─────────────┴───────────────────┘
-```
-
-### Asosiy modullar
-
-| Modul | Vazifasi |
-|-------|----------|
-| **Spring Core** | IoC container, DI asoslari |
-| **Spring AOP** | Aspect-oriented programming |
-| **Spring JDBC** | Ma'lumotlar bazasi bilan ishlash |
-| **Spring ORM** | ORM frameworklar bilan integratsiya |
-| **Spring MVC** | Web ilovalar yaratish |
-| **Spring Test** | Unit va integration testlar |
-
----
-
-## 2.4 - Inversion of Control (IoC)
-
-### IoC nima?
-
-**Inversion of Control (IoC)** - ob'ektlarning bog'liqliklarini o'zi yaratmasdan, tashqaridan (container) olish prinsipi.
-
-```java
-// ❌ Traditional - Control obyektning o'zida
-public class OrderService {
-    private PaymentService paymentService;
-    
-    public OrderService() {
-        // Ob'ekt o'zi bog'liqlikni yaratadi
-        this.paymentService = new PaymentService(); 
-    }
-}
-
-// ✅ IoC - Control container'da
-@Component
-public class OrderService {
-    private final PaymentService paymentService;
-    
-    // Container bog'liqlikni inject qiladi
-    public OrderService(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
-}
-```
-
-### Bean nima?
-
-**Bean** - Spring IoC container tomonidan boshqariladigan Java ob'ekti.
-
-```java
-// Spring container tomonidan boshqariladigan ob'ekt
-@Component
-public class MyBean {
-    // Spring bu ob'ektni yaratadi, boshqaradi va inject qiladi
-}
-```
-
----
-
-## 2.5 - IoC Container turlari
-
-### 1. BeanFactory Container
-
-```java
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.core.io.ClassPathResource;
-
-// Eng asosiy IoC container
-BeanFactory factory = new XmlBeanFactory(new ClassPathResource("beans.xml"));
-MyBean myBean = factory.getBean(MyBean.class);
-```
-
-**Xususiyatlari:**
-- Eng yengil container
-- Lazy initialization (kerak bo'lganda yaratadi)
-- Asosiy DI funksiyalari
-
-### 2. ApplicationContext Container
-
-```java
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-// Ko'proq funksiyalarga ega container
-ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-MyBean myBean = context.getBean(MyBean.class);
-```
-
-**Xususiyatlari:**
-- BeanFactory dan kengaytirilgan
-- Eager initialization (startda yaratadi)
-- Message source (i18n)
-- Event publishing
-- AOP qo'llab-quvvatlash
-
-### BeanFactory vs ApplicationContext
+Spring da ikkita asosiy IoC container mavjud:
 
 | Xususiyat | BeanFactory | ApplicationContext |
-|-----------|-------------|-------------------|
-| **Initialization** | Lazy (kerak bo'lganda) | Eager (startda) |
-| **AOP** | Qo'llab-quvvatlamaydi | Qo'llab-quvvatlaydi |
-| **Event handling** | Yo'q | Ha |
-| **Internationalization** | Yo'q | Ha |
-| **Resource loading** | Cheklangan | To'liq |
+|-----------|-------------|--------------------|
+| Lazy loading | Ha (faqat so‘ralganda yaratiladi) | Yo‘q (startup da yaratiladi) |
+| Enterprise feature lar | Minimal | To‘liq (AOP, event handling, i18n) |
+| Ishlatiladigan joy | Resurs cheklangan (mobile, embedded) | Barcha real proyektlar |
+| Spring versiyasi | Asosiy, eski | Hozirgi standart |
+
+**Bean lifecycle (step-by-step):**
+
+1. Container configuration ni o‘qiydi (XML, JavaConfig, yoki annotation)
+2. Bean definition larni parse qiladi
+3. Constructor orqali instance yaratadi
+4. Dependency larni inject qiladi (@Autowired)
+5. @PostConstruct yoki init-method ni chaqiradi
+6. Bean foydalanishga tayyor
+7. Container yopilganda @PreDestroy yoki destroy-method ni chaqiradi
+
+**Spring modullari (tayanch):**
+
+- Spring Core (IoC/DI ning asosi)
+- Spring MVC (web application)
+- Spring Data JPA (database)
+- Spring Security (authentication/authorization)
+- Spring Boot (auto-configuration + starter lar)
+
+### 3. Code Implementation & Best Practices
+
+**1-usul: Auto-wiring (eng ko‘p ishlatiladigan usul)**
 
 ```java
-// Tavsiya etiladi - ApplicationContext ishlatish
+// Repository - ma'lumotlar bazasi bilan ishlaydi
+@Component  // Spring bu class ni skaner qilib, bean sifatida ro'yxatga oladi
+public class UserRepository {
+    public User findById(Long id) {
+        // database logic
+        return new User(id, "John");
+    }
+}
+
+// Service - biznes logika
+@Component
+public class UserService {
+    private final UserRepository repository;
+    
+    @Autowired  // Spring repository ni bu yerga inject qiladi
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
+    
+    public User getUser(Long id) {
+        return repository.findById(id);
+    }
+}
+
+// Configuration - component scan qaysi package ni skaner qilishini aytadi
 @Configuration
-@ComponentScan("com.example")
+@ComponentScan("com.example.app")  // Bu package va uning ichidagi @Component larni top
 public class AppConfig {
+    // Boshqa bean larni bu yerda ham e'lon qilish mumkin
+}
+
+// Ishlatish
+public class Main {
     public static void main(String[] args) {
-        ApplicationContext context = 
-            new AnnotationConfigApplicationContext(AppConfig.class);
-        
-        // Bean olish
-        UserService userService = context.getBean(UserService.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        UserService service = context.getBean(UserService.class);
+        User user = service.getUser(1L);
     }
 }
 ```
 
----
-
-## 2.6 - Bean wiring usullari
-
-### 1. Automatic Wiring (Avtomatik bog'lash)
-
-Spring ikkita mexanizm orqali avtomatik bog'lashni amalga oshiradi:
-
-#### Component Scanning - Bean'larni avtomatik topish
+**2-usul: Java Configuration (to‘liq nazorat kerak bo‘lganda)**
 
 ```java
-// 1. Bean'ni belgilash
-@Component
-public class UserService {
-    // ...
-}
-
-@Component
-public class OrderService {
-    // ...
-}
-
-// 2. Scanning sozlash
 @Configuration
-@ComponentScan(basePackages = "com.example")
-public class AppConfig {
-    // ComponentScan orqali barcha @Component larni topadi
-}
-```
-
-#### Autowiring - Bog'liqliklarni avtomatik inject qilish
-
-```java
-@Component
-public class UserService {
-    private final UserRepository userRepository;
-    private final EmailService emailService;
+public class ManualConfig {
     
-    // @Autowired - Spring bog'liqliklarni inject qiladi
-    @Autowired
-    public UserService(UserRepository userRepository, EmailService emailService) {
-        this.userRepository = userRepository;
-        this.emailService = emailService;
-    }
-}
-```
-
-### 2. Java-based Configuration (Java konfiguratsiya)
-
-```java
-@Configuration  // Konfiguratsiya class'ini belgilash
-public class AppConfig {
-    
-    @Bean  // Bean yaratish
+    @Bean  // Bu metod qaytargan object Spring container da bean bo‘ladi
     public UserRepository userRepository() {
-        return new UserRepository();
+        return new UserRepository();  // Murakkab initialization bo‘lishi mumkin
     }
     
     @Bean
     public UserService userService() {
-        // Bog'liqliklarni qo'lda bog'lash
+        // Manual dependency injection
         return new UserService(userRepository());
     }
-    
-    // Yoki parametr orqali
-    @Bean
-    public OrderService orderService(UserRepository userRepository) {
-        return new OrderService(userRepository);
-    }
 }
 ```
 
-### 3. XML-based Configuration (XML konfiguratsiya)
+**3-usul: XML (eski loyihalarda uchraydi, yangi loyihalarda ishlatilmaydi)**
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd">
-    
-    <!-- Bean declaration -->
+<!-- applicationContext.xml -->
+<beans xmlns="http://www.springframework.org/schema/beans">
     <bean id="userRepository" class="com.example.UserRepository"/>
-    
     <bean id="userService" class="com.example.UserService">
-        <!-- Constructor injection -->
         <constructor-arg ref="userRepository"/>
     </bean>
-    
-    <bean id="orderService" class="com.example.OrderService">
-        <!-- Setter injection -->
-        <property name="userRepository" ref="userRepository"/>
-    </bean>
 </beans>
 ```
 
----
+**Best Practices:**
 
-## 2.7 - Advanced wiring
+- Constructor injection ni field injection dan afzal ko‘ring (test qilish oson, immutability)
+- @Autowired ni constructor da ishlating, field da emas
+- Component scan ni aniq package bilan cheklang (tezroq ishlaydi)
+- Bean lar default singleton scope da, kerak bo‘lmasa prototype ishlatmang
 
-### Wiring collections
+### 4. Trade-Off Analysis
 
+| Mezon | Spring Framework | Jakarta EE |
+|-------|-----------------|------------|
+| Og‘irligi | Yengil, modular | Heavyweight |
+| O‘rganish qiyinligi | Oson, katta community | Murakkab, tik learning curve |
+| Moslashuvchanlik | Yuqori (XML, Java, Auto) | Past, rigid arxitektura |
+| Community support | Katta, aktiv (Stack Overflow 1M+) | Kichikroq |
+| Tooling | Mature (Spring Boot, Spring Initializr) | Limited |
+| Real-world ishlatilishi | 80%+ Java enterprise proyektlari | Legacy, banking/insurance |
+
+**Qachon Spring ishlatish kerak:**
+- Yangi microservice yoki web application
+- Tez prototiplash kerak bo‘lsa (Spring Boot bilan)
+- Katta community va kutubxonalar kerak bo‘lsa
+
+**Qachon Jakarta EE ishlatish kerak:**
+- Legacy loyihani saqlash
+- Minimal tashqi dependency talab qiladigan muhit
+- Banking kabi sohalarda ba'zi standartlar talab qilishi mumkin
+
+### 5. Common Mistakes
+
+**Xato 1: Field injection dan haddan tashqari ko‘p foydalanish**
 ```java
-// JavaConfig - Collection wiring
-@Configuration
-public class AppConfig {
-    
-    @Bean
-    public List<String> supportedCountries() {
-        return Arrays.asList("UZ", "US", "UK");
-    }
-    
-    @Bean
-    public Set<String> adminEmails() {
-        return Set.of("admin@example.com", "super@example.com");
-    }
-    
-    @Bean
-    public Map<String, Integer> portMapping() {
-        Map<String, Integer> ports = new HashMap<>();
-        ports.put("http", 80);
-        ports.put("https", 443);
-        return ports;
-    }
-}
-
-// XML - Collection wiring
-<bean id="supportedCountries" class="java.util.ArrayList">
-    <constructor-arg>
-        <list>
-            <value>UZ</value>
-            <value>US</value>
-            <value>UK</value>
-        </list>
-    </constructor-arg>
-</bean>
-```
-
-### p-namespace va c-namespace
-
-```xml
-<!-- XML namespace'lar -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:c="http://www.springframework.org/schema/c">
-
-    <!-- p-namespace - property injection -->
-    <bean id="user" class="com.example.User"
-          p:name="John"
-          p:age="30"/>
-
-    <!-- c-namespace - constructor injection -->
-    <bean id="userService" class="com.example.UserService"
-          c:userRepository-ref="userRepository"
-          c:emailService-ref="emailService"/>
-
-</beans>
-```
-
-### factory-method, init-method, destroy-method
-
-```java
-// JavaConfig
-@Configuration
-public class AppConfig {
-    
-    @Bean(initMethod = "init", destroyMethod = "cleanup")
-    public DataSource dataSource() {
-        return new DataSource();
-    }
-    
-    @Bean
-    public static ConnectionFactory connectionFactory() {
-        return ConnectionFactory.getInstance();  // factory-method
-    }
-}
-
-// XML
-<bean id="dataSource" 
-      class="com.example.DataSource"
-      init-method="init"
-      destroy-method="cleanup"/>
-
-<bean id="connectionFactory"
-      class="com.example.ConnectionFactory"
-      factory-method="getInstance"/>
-```
-
-### PropertySources
-
-```java
-@Configuration
-@PropertySource("classpath:application.properties")
-public class AppConfig {
-    
-    @Value("${database.url}")
-    private String dbUrl;
-    
-    @Value("${database.username}")
-    private String dbUsername;
-    
-    @Bean
-    public DataSource dataSource() {
-        return new DataSource(dbUrl, dbUsername);
-    }
-}
-```
-
-### Import configuration
-
-```java
-@Configuration
-@Import({DatabaseConfig.class, SecurityConfig.class})
-public class AppConfig {
-    // Barcha konfiguratsiyalarni birlashtirish
-}
-```
-
-### Conditional beans
-
-```java
-@Configuration
-public class AppConfig {
-    
-    @Bean
-    @Conditional(DevelopmentCondition.class)
-    public DataSource devDataSource() {
-        return new DevDataSource();  // Faqat development da
-    }
-    
-    @Bean
-    @Conditional(ProductionCondition.class)
-    public DataSource prodDataSource() {
-        return new ProdDataSource(); // Faqat production da
-    }
-}
-
-// Custom condition
-public class DevelopmentCondition implements Condition {
-    @Override
-    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        String profile = context.getEnvironment().getProperty("spring.profiles.active");
-        return "dev".equals(profile);
-    }
-}
-```
-
-### Addressing ambiguity in autowiring
-
-```java
+// XATO - test qilish qiyin
 @Component
-public class PaymentService {
-    
-    // Bir nechta bean mavjud bo'lganda - @Primary
+public class UserService {
     @Autowired
-    @Primary
-    private PaymentProcessor primaryProcessor;
-    
-    // @Qualifier bilan aniq bean ni tanlash
-    @Autowired
-    @Qualifier("paypalProcessor")
-    private PaymentProcessor paypalProcessor;
-    
-    // Yoki constructor parametrida
-    public PaymentService(@Qualifier("stripeProcessor") PaymentProcessor processor) {
-        this.processor = processor;
-    }
+    private UserRepository repository;
 }
 
-// Bean'larga nom berish
-@Component("paypalProcessor")
-public class PayPalProcessor implements PaymentProcessor { }
-
-@Component("stripeProcessor")
-public class StripeProcessor implements PaymentProcessor { }
-
+// TO‘G‘RI
 @Component
-@Primary
-public class DefaultProcessor implements PaymentProcessor { }
+public class UserService {
+    private final UserRepository repository;
+    
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
+}
 ```
 
----
-
-## 2.8 - Amaliy misol
-
-### To'liq Spring konfiguratsiya misoli
-
+**Xato 2: Component scan ni butun root package da ishlatish**
 ```java
-// 1. Model
-public class Product {
-    private Long id;
-    private String name;
-    private double price;
-    // getters, setters, constructor
-}
+// XATO - butun classpath skaner qilinadi, sekin ishlaydi
+@ComponentScan("com")
 
-// 2. Repository
-@Repository
-public class ProductRepository {
-    private List<Product> products = new ArrayList<>();
-    
-    public void save(Product product) {
-        products.add(product);
-    }
-    
-    public List<Product> findAll() {
-        return products;
-    }
-}
-
-// 3. Service
-@Service
-public class ProductService {
-    private final ProductRepository productRepository;
-    
-    @Autowired
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-    
-    public void createProduct(Product product) {
-        productRepository.save(product);
-    }
-    
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-}
-
-// 4. Configuration
-@Configuration
-@ComponentScan("com.example")
-@PropertySource("classpath:application.properties")
-public class AppConfig {
-    
-    @Bean
-    @ConditionalOnProperty(name = "cache.enabled", havingValue = "true")
-    public CacheManager cacheManager() {
-        return new CacheManager();
-    }
-    
-    @Bean
-    public DataSource dataSource(
-            @Value("${db.url}") String url,
-            @Value("${db.username}") String username,
-            @Value("${db.password}") String password) {
-        return new DataSource(url, username, password);
-    }
-}
-
-// 5. Main
-public class Application {
-    public static void main(String[] args) {
-        ApplicationContext context = 
-            new AnnotationConfigApplicationContext(AppConfig.class);
-        
-        ProductService productService = context.getBean(ProductService.class);
-        
-        Product product = new Product(1L, "Laptop", 1200.0);
-        productService.createProduct(product);
-        
-        productService.getAllProducts()
-            .forEach(p -> System.out.println(p.getName()));
-    }
-}
+// TO‘G‘RI - faqat kerakli package
+@ComponentScan("com.example.app.service", "com.example.app.repository")
 ```
 
----
-
-## Tekshiruv Savollari
-
-1. **Java EE ning asosiy kamchiliklari nimalar?**
-2. **Spring Framework qanday afzalliklarga ega?**
-3. **IoC (Inversion of Control) nima? Spring qanday amalga oshiradi?**
-4. **Bean nima? Spring IoC container qanday boshqaradi?**
-5. **BeanFactory va ApplicationContext o'rtasidagi farq?**
-6. **Spring'da bean wiring qanday amalga oshiriladi? 3 ta usulni ayting.**
-7. **@Component, @Autowired, @Configuration annotatsiyalarining vazifasi?**
-8. **JavaConfig va XML konfiguratsiya o'rtasidagi farq?**
-9. **@ComponentScan nima va nima uchun kerak?**
-10. **@Primary va @Qualifier qachon ishlatiladi?**
-
----
-
-## Amaliy topshiriq
-
-Quyidagi imkoniyatlarga ega Spring loyihasini yarating:
-
-1. **JavaConfig** yordamida konfiguratsiya
-2. **Component scanning** orqali bean'lar topilsin
-3. **Constructor injection** ishlatilsin
-4. **@Value** orqali properties fayldan ma'lumot o'qilsin
-5. **@Primary** va **@Qualifier** bilan bir nechta bean'lar boshqarilsin
-6. **Conditional** bean yaratilsin (dev/prod)
-7. **@PostConstruct** va **@PreDestroy** ishlatilsin
-
+**Xato 3: Singleton bean da mutable state saqlash**
 ```java
-// Tekshirish
-mvn spring-boot:run
-# yoki
-java -jar target/myapp.jar
+// XATO - thread-safe emas
+@Component
+public class Counter {
+    private int count = 0;  // QIYIN XATO - multiple thread o‘zgartiradi
+    public void increment() { count++; }
+}
+
+// TO‘G‘RI - stateless yoki thread-safe
+@Component
+public class Counter {
+    private final AtomicInteger count = new AtomicInteger(0);
+    public void increment() { count.incrementAndGet(); }
+}
 ```
 
----
+**Xato 4: @Autowired ni ishlatib, lekin Spring context ni ishga tushirmaslik**
+```java
+// XATO - NullPointerException keladi
+UserService service = new UserService();  // Spring inject qilmaydi, repository = null
+service.getUser(1L);
+```
 
-**Keyingi mavzu:** [Spring Bean Lifecycle](./03_Spring_Bean_Lifecycle.md)  
-**[Mundarijaga qaytish](../../README.md)**
+### 6. Daily Coding Task
 
-> Spring Framework - Java ekosistemasidagi eng muhim framework! 🚀
+**Task: Notification tizimi yarating**
+
+Tasavvur qiling, sizda turli xil notification service lar bor (Email, SMS, Push). Spring DI orqali ularni boshqaradigan tizim yozing.
+
+Talablar:
+1. Notification interface yarating (send(String message) metodi bilan)
+2. EmailNotification, SmsNotification, PushNotification class larini @Component bilan belgilang
+3. NotificationManager class ini yarating, u List<Notification> ni qabul qilsin
+4. @ComponentScan va @Configuration ishlatib, Spring context ni ishga tushiring
+5. Barcha notification larni birma-bir chaqiradigan metod yozing
+
+Kod tuzilmasi:
+```
+com.example.notification/
+├── Notification.java (interface)
+├── EmailNotification.java
+├── SmsNotification.java
+├── PushNotification.java
+├── NotificationManager.java
+└── AppConfig.java
+```
+
+Yechimni o‘zingiz yozib ko‘ring, so‘ng Spring context dan NotificationManager ni olib, notifyAll("Hello") metodini chaqiring.
+
+### 7. Interview Questions
+
+**Savol 1: Inversion of Control (IoC) va Dependency Injection (DI) o‘rtasidagi farq nima?**
+
+Javob: IoC - bu kengroq prinsip. Siz nazoratni framework ga berasiz. DI esa IoC ning amalga oshirilishining bir usuli. DI da siz object ga uning dependency larini tashqaridan (constructor, setter, yoki field orqali) berasiz. Spring DI ni IoC container orqali amalga oshiradi. Qisqasi: IoC - WHAT (nima), DI - HOW (qanday).
+
+**Savol 2: BeanFactory va ApplicationContext o‘rtasidagi farqni tushuntiring. Qaysi birini ishlatish kerak?**
+
+Javob: ApplicationContext BeanFactory ning to‘liq superseti. ApplicationContext startup da barcha singleton bean larni yaratadi (eager loading), BeanFactory esa faqat so‘ralganda (lazy loading). ApplicationContext qo‘shimcha feature lar beradi: AOP, event handling, internationalization, va web application support. 99% hollarda ApplicationContext ishlatiladi. BeanFactory faqat resource cheklangan muhitlarda (masalan, mobile) ishlatiladi.
+
+**Savol 3: Spring da bean larni bog‘lash (wiring) ning qanday usullari bor? Qaysi biri eng yaxshi?**
+
+Javob: 3 usul bor:
+1. XML configuration (eski, endi kam ishlatiladi)
+2. Java configuration (@Configuration + @Bean)
+3. Auto-wiring (@ComponentScan + @Autowired)
+
+Eng yaxshi usul: Auto-wiring + constructor injection. Bu eng kam kod yozish, kam xato, va test qilish oson. Java configuration esa tashqi library lardan bean yaratishda (masalan, DataSource) yoki murakkab initialization kerak bo‘lganda ishlatiladi. XML dan yangi loyihalarda foydalanmang.
